@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>CandleScalpEA 5.0</title>
-  <meta name="description" content="CandleScalpEA 5.0 (MT5) — Created by Doug Brewington (AKA DOMINO). Subscription licensing, promo codes, and account binding for MT5." />
+  <meta name="description" content="CandleScalpEA 5.0 (MT5) — Created by Doug Brewington (AKA DOMINO)." />
 
   <style>
     :root{
@@ -21,7 +21,6 @@
 
       --accent: #7c3aed;   /* purple */
       --accent2:#22c55e;   /* green */
-      --danger: #ef4444;   /* red */
       --warn: #f59e0b;     /* amber */
     }
 
@@ -91,7 +90,7 @@
       line-height: 1.1;
     }
 
-    /* Nav links (plain text section links) */
+    /* Plain text section links */
     .nav-left{
       display:flex;
       align-items:center;
@@ -111,7 +110,7 @@
       color: rgba(255,255,255,0.95);
     }
 
-    /* Action buttons (boxed links) */
+    /* Boxed button links (top-right only) */
     .nav-actions{
       display:flex;
       align-items:center;
@@ -170,25 +169,21 @@
       pointer-events:none;
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 22px;
-      position:relative;
-      z-index: 1;
-    }
-
     h1{
       margin:0 0 10px;
       font-size: 30px;
       letter-spacing: -0.4px;
       line-height:1.1;
+      position:relative;
+      z-index:1;
     }
     .subtitle{
       margin:0 0 14px;
       color: var(--muted);
       font-size: 14.5px;
-      max-width: 60ch;
+      max-width: 70ch;
+      position:relative;
+      z-index:1;
     }
 
     .warning{
@@ -202,63 +197,29 @@
       color: rgba(255,255,255,0.92);
       font-size: 13.5px;
       margin-top: 6px;
-    }
-    .warning b{ font-weight:800; }
-
-    .hero-actions{
-      display:flex;
-      gap:10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .bigbtn{
-      height: 44px;
-      padding: 0 16px;
-      border-radius: 14px;
-      font-size: 13.5px;
-      font-weight: 750;
-      letter-spacing: 0.2px;
-    }
-    .bigbtn-primary{
-      border-color: rgba(34,197,94,0.55);
-      background: rgba(34,197,94,0.18);
-    }
-    .bigbtn-primary:hover{
-      background: rgba(34,197,94,0.26);
-      border-color: rgba(34,197,94,0.75);
-    }
-
-    .statbox{
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius);
-      padding: 18px;
       position:relative;
       z-index:1;
     }
-    .statrow{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .statrow:last-child{ border-bottom:none; }
-    .statk{ color: var(--muted); font-size: 13px; }
-    .statv{ font-weight: 750; font-size: 13.5px; }
+    .warning b{ font-weight:800; }
 
-    /* Sections */
     section{ padding: 22px 0; }
     .section-title{
       margin: 0 0 12px;
       font-size: 18px;
       letter-spacing: -0.2px;
     }
+
     .grid3{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
     .card{
       border: 1px solid var(--line);
       background: rgba(255,255,255,0.05);
@@ -276,10 +237,37 @@
       font-size: 13.5px;
     }
 
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .note{
+      margin-top:10px;
+      color: rgba(255,255,255,0.78);
+      font-size: 13.5px;
+    }
+    .note b{ color: rgba(255,255,255,0.92); }
+
+    .video-wrap{
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      overflow:hidden;
+    }
+    .video-top{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .video-box{
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color: rgba(255,255,255,0.70);
+      font-size: 13.5px;
     }
 
     .faq-item{
@@ -291,7 +279,6 @@
     .faq-q{ font-weight: 800; margin-bottom: 6px; font-size: 13.8px; }
     .faq-a{ color: var(--muted); font-size: 13.5px; margin:0; }
 
-    /* Footer */
     footer{
       padding: 26px 0 40px;
       border-top: 1px solid var(--line);
@@ -300,9 +287,7 @@
       margin-top: 18px;
     }
 
-    /* Responsive */
     @media (max-width: 920px){
-      .hero-grid{ grid-template-columns: 1fr; }
       .grid3{ grid-template-columns: 1fr; }
       .grid2{ grid-template-columns: 1fr; }
       .brand{ min-width: auto; }
@@ -336,12 +321,13 @@
           <a class="navlink" href="#faq">FAQ</a>
         </nav>
 
-        <!-- RIGHT: boxed button links -->
+        <!-- RIGHT: boxed button links (top-right ONLY) -->
         <nav class="nav-actions" aria-label="Account actions">
           <a class="btn" href="login.html">Login</a>
           <a class="btn" href="register.html">Register</a>
           <a class="btn" href="#pricing">Pricing</a>
           <a class="btn btn-primary" href="#download">Download</a>
+          <!-- Admin button will be added back in the demo build (so it doesn’t 404). -->
         </nav>
       </div>
     </div>
@@ -351,145 +337,128 @@
   <main id="top" class="container">
     <div class="hero">
       <div class="hero-card">
-        <div class="hero-grid">
-          <div>
-            <h1>CandleScalpEA 5.0 (MT5)</h1>
-            <p class="subtitle">
-              Subscription licensing, email verification, promo codes, and MT5 account binding —
-              built to keep your setup clean and professional.
-            </p>
+        <h1>CandleScalpEA 5.0 (MT5)</h1>
+        <p class="subtitle">
+          CandleScalpEA 5.0 is delivered through a monthly subscription. To protect subscribers,
+          access requires verified email and an active subscription.
+        </p>
 
-            <div class="warning">
-              <span aria-hidden="true">⚠️</span>
-              <span><b>Make sure you are using a MetaTrader 5 account</b> when signing up.</span>
-            </div>
-
-            <div class="hero-actions">
-              <a class="btn bigbtn bigbtn-primary" href="register.html">Register</a>
-              <a class="btn bigbtn" href="login.html">Login</a>
-              <a class="btn bigbtn" href="#pricing">View Pricing</a>
-            </div>
-          </div>
-
-          <div class="statbox">
-            <div class="statrow">
-              <div class="statk">Plan</div>
-              <div class="statv">$50 / month</div>
-            </div>
-            <div class="statrow">
-              <div class="statk">License bind</div>
-              <div class="statv">MT5 Account # + Nickname</div>
-            </div>
-            <div class="statrow">
-              <div class="statk">Accounts per subscriber</div>
-              <div class="statv">1 active account</div>
-            </div>
-            <div class="statrow">
-              <div class="statk">Account changes</div>
-              <div class="statv">Unlimited (re-bind)</div>
-            </div>
-            <div class="statrow">
-              <div class="statk">Refund policy</div>
-              <div class="statv">None</div>
-            </div>
-          </div>
+        <div class="warning">
+          <span aria-hidden="true">⚠️</span>
+          <span><b>Make sure you are using a MetaTrader 5 account</b> when signing up.</span>
         </div>
+
+        <p class="note">
+          <b>Important:</b> Each subscription is for <b>one active MT5 account at a time</b>.
+          If your prop firm gives you a new MT5 account number after passing a challenge,
+          you can remove the old account number and add the new one.
+          If you want to use the EA on multiple accounts, you’ll need to purchase an additional subscription.
+        </p>
       </div>
     </div>
 
-    <!-- FEATURES -->
+    <!-- FEATURES (keep it clean, only what they need) -->
     <section id="features">
       <h2 class="section-title">Features</h2>
       <div class="grid3">
         <div class="card">
-          <h3>Professional licensing flow</h3>
-          <p>Register, verify email, subscribe, download EA, then bind your MT5 account and nickname.</p>
+          <h3>Email verification required</h3>
+          <p>You must verify your email before purchasing a subscription or accessing downloads.</p>
         </div>
         <div class="card">
-          <h3>Anti-sharing by design</h3>
-          <p>Each subscription is tied to 1 active MT5 account + case-sensitive nickname.</p>
+          <h3>License tied to MT5 + Nickname</h3>
+          <p>Your access is validated using your MT5 account number + your nickname (case-sensitive).</p>
         </div>
         <div class="card">
-          <h3>Soft-lock on failed payment</h3>
-          <p>EA stays on chart but will not open new trades; can still manage/close safely.</p>
+          <h3>Simple account number updates</h3>
+          <p>Prop firm account number changed? Remove the old number and add the new one anytime.</p>
         </div>
       </div>
     </section>
 
-    <!-- HOW IT WORKS -->
+    <!-- HOW IT WORKS (NO promo code talk, NO bind word) -->
     <section id="how">
       <h2 class="section-title">How It Works</h2>
       <div class="grid2">
         <div class="card">
           <h3>1) Create your account</h3>
-          <p>Register with email + password, then verify your email before doing anything else.</p>
+          <p>Sign up with email + password, then verify your email to unlock access.</p>
         </div>
         <div class="card">
           <h3>2) Subscribe</h3>
-          <p>Pay $50/month. Enter promo code at checkout if you have one.</p>
+          <p>Purchase the $50/month subscription to unlock your download and license access.</p>
         </div>
         <div class="card">
-          <h3>3) Download EA</h3>
-          <p>After successful payment, download the official .ex5 for CandleScalpEA 5.0 (MT5).</p>
+          <h3>3) Add your MT5 account number + nickname</h3>
+          <p>Enter your MT5 account number and the nickname you want to use (nickname is case-sensitive).</p>
         </div>
         <div class="card">
-          <h3>4) Bind your license</h3>
-          <p>Enter your MT5 Account # + Nickname (case-sensitive). You can clear and re-bind anytime.</p>
+          <h3>4) Download + install</h3>
+          <p>Download the EA and install it in MT5. Then type your nickname into the EA inputs exactly as saved on your account.</p>
         </div>
       </div>
     </section>
 
-    <!-- PRICING -->
+    <!-- VIDEO (placeholder you can replace with your YouTube embed later) -->
+    <section id="video">
+      <h2 class="section-title">Install Video</h2>
+      <div class="video-wrap">
+        <div class="video-top">
+          <div>How to Download & Install CandleScalpEA 5.0 in MT5</div>
+          <div style="opacity:.8; font-weight:600;">(YouTube video placeholder)</div>
+        </div>
+        <div class="video-box">
+          Replace this box with your YouTube embed later.
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING (simple, no promo codes mentioned) -->
     <section id="pricing">
       <h2 class="section-title">Pricing</h2>
       <div class="grid2">
         <div class="card">
-          <h3>Standard Subscription</h3>
-          <p><b>$50/month</b><br/>Includes access to download, 1 active MT5 bind, unlimited re-binds.</p>
+          <h3>Subscription</h3>
+          <p><b>$50/month</b><br/>Includes access to CandleScalpEA 5.0 (MT5) and license validation for 1 active MT5 account at a time.</p>
         </div>
         <div class="card">
-          <h3>Promo Codes</h3>
-          <p>Supports % off, fixed amount, and 100% off. Duration can be forever or X months (admin controlled).</p>
+          <h3>Policy</h3>
+          <p><b>No refunds.</b><br/>License access requires an active subscription. If your subscription is inactive, the EA will not open new trades.</p>
         </div>
       </div>
     </section>
 
-    <!-- DOWNLOAD -->
+    <!-- DOWNLOAD (keep it short — no extra login/register buttons) -->
     <section id="download">
       <h2 class="section-title">Download</h2>
       <div class="card">
         <h3>CandleScalpEA 5.0 (MT5) — v1.31</h3>
         <p>
-          Downloads are available after subscription is active.
-          If you don’t see the download after paying, log out and log back in.
+          Downloads appear after your subscription is active and your email is verified.
+          You’ll find your download button inside your dashboard after signing in.
         </p>
-        <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="download.html">Go to Download Page</a>
-          <a class="btn" href="login.html">Login</a>
-          <a class="btn" href="register.html">Register</a>
-        </div>
       </div>
     </section>
 
-    <!-- FAQ -->
+    <!-- FAQ (simple words, no “bind”) -->
     <section id="faq">
       <h2 class="section-title">FAQ</h2>
       <div class="grid2">
         <div class="faq-item">
-          <div class="faq-q">How do I install the EA?</div>
-          <p class="faq-a">Download your .ex5 after payment, then place it into MT5 Experts folder and restart MT5.</p>
+          <div class="faq-q">Where do I type my nickname in MT5?</div>
+          <p class="faq-a">In MT5, add the EA to your chart, open the EA Inputs tab, and type your nickname exactly (case-sensitive).</p>
         </div>
         <div class="faq-item">
-          <div class="faq-q">How do I bind my account?</div>
-          <p class="faq-a">Enter your MT5 account number + nickname on the website, then type the same nickname in the EA inputs.</p>
+          <div class="faq-q">My prop firm gave me a new MT5 account number. Can I update it?</div>
+          <p class="faq-a">Yes. Remove your old account number on your dashboard and add the new one. Changes are allowed anytime.</p>
         </div>
         <div class="faq-item">
-          <div class="faq-q">My prop firm changed my MT5 account number — what now?</div>
-          <p class="faq-a">Remove the old bind and add the new MT5 account number + nickname. Unlimited changes.</p>
+          <div class="faq-q">How many accounts can I use per subscription?</div>
+          <p class="faq-a">One active MT5 account at a time per subscription. If you want multiple accounts, you’ll need multiple subscriptions.</p>
         </div>
         <div class="faq-item">
-          <div class="faq-q">What happens if payment fails?</div>
-          <p class="faq-a">Your license is soft-locked immediately: no new trades; existing trades can be managed/closed safely.</p>
+          <div class="faq-q">What happens if my payment fails?</div>
+          <p class="faq-a">Your access is soft-locked immediately: the EA will not open new trades, but it can still manage/close existing trades safely.</p>
         </div>
       </div>
     </section>
@@ -497,7 +466,8 @@
     <footer>
       <div><b>CandleScalpEA 5.0</b> — Created by Doug Brewington (AKA DOMINO)</div>
       <div style="margin-top:6px;">
-        This site is for licensing and access control only. No refunds. Trading is risky. Use at your own discretion.
+        Risk Disclosure: Trading involves risk and may not be suitable for all investors. Past performance does not guarantee future results.
+        Use at your own discretion.
       </div>
     </footer>
   </main>
