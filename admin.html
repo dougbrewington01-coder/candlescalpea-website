@@ -251,9 +251,9 @@
     <div class="grid3">
       <div class="card">
         <h2>Overview</h2>
-        <div class="stat"><div class="label">Total Users</div><div class="value" id="statUsers">12</div></div>
-        <div class="stat"><div class="label">Active Subscriptions</div><div class="value" id="statActive">5</div></div>
-        <div class="stat"><div class="label">Soft-Locked</div><div class="value" id="statLocked">3</div></div>
+        <div class="stat"><div class="label">Total Users</div><div class="value" id="statUsers">0</div></div>
+        <div class="stat"><div class="label">Active Subscriptions</div><div class="value" id="statActive">0</div></div>
+        <div class="stat"><div class="label">Soft-Locked</div><div class="value" id="statLocked">0</div></div>
       </div>
 
       <div class="card">
@@ -284,38 +284,6 @@
       </div>
     </div>
 
-    <!-- ✅ ADDED (ONLY ADDITION): YOUR MT5 + NICKNAME BOXES FOR YOUR OWN EA -->
-    <div class="card" style="margin-top:14px;">
-      <h2>Your MT5 Bind (Admin)</h2>
-
-      <div class="toolbar" style="margin-top:8px;">
-        <input id="adminEmail" placeholder="Your Email (auto)" disabled style="flex:1; min-width:240px; opacity:.9;" />
-        <span class="pill warn" id="adminSubPill"><span class="dot"></span>—</span>
-        <span class="pill warn" id="adminVerifiedPill"><span class="dot"></span>—</span>
-      </div>
-
-      <div class="grid2" style="margin-top:12px;">
-        <div>
-          <div class="label" style="margin:0 0 6px;">MT5 Account Number</div>
-          <input id="adminMt5" placeholder="MT5 Account Number" />
-        </div>
-        <div>
-          <div class="label" style="margin:0 0 6px;">Nickname (case-sensitive)</div>
-          <input id="adminNick" placeholder="Nickname (case-sensitive)" />
-        </div>
-      </div>
-
-      <div class="toolbar" style="margin-top:12px;">
-        <button class="btn btn-primary" type="button" id="btnAdminSave">Save</button>
-        <span class="help" id="adminSaveMsg" style="margin:0;"> </span>
-      </div>
-
-      <div class="help" style="margin-top:10px;">
-        This only binds <b>your</b> MT5 account + nickname so your EA can run, same as customers.
-      </div>
-    </div>
-    <!-- ✅ END ADDED SECTION -->
-
     <!-- USERS TABLE -->
     <div class="card" style="margin-top:14px;">
       <h2>Users</h2>
@@ -342,7 +310,7 @@
             <th>Nickname</th>
             <th>Promo</th>
             <th>Created</th>
-            <th style="min-width:250px;">Actions</th>
+            <th style="min-width:320px;">Actions</th>
           </tr>
         </thead>
         <tbody id="tbody">
@@ -351,7 +319,7 @@
       </table>
 
       <div class="help">
-        Next step: this table will be fed by your database. Actions will call your API (disable license, clear MT5 account, lock/unlock, etc.).
+        Added: <b>Remove</b> button (demo). Later this will call your API/database to permanently delete a user.
       </div>
     </div>
 
@@ -365,12 +333,13 @@
 
   <script>
     // Demo-only data (so you can SEE what the admin page will look like).
-    const users = [
-      { email:"alpha@example.com", verified:true,  sub:"active",   mt5:"12345678", nick:"Domino", promo:"—", created:"2025-12-26" },
-      { email:"bravo@example.com", verified:true,  sub:"past_due", mt5:"88990011", nick:"BRAVO",  promo:"1mo100", created:"2025-12-26" },
-      { email:"charlie@example.com", verified:false, sub:"locked", mt5:"—",       nick:"—",      promo:"—", created:"2025-12-27" },
-      { email:"family@example.com", verified:true,  sub:"active",   mt5:"44556677", nick:"FAMILY", promo:"FAMILY100", created:"2025-12-20" },
-      { email:"delta@example.com", verified:true,  sub:"canceled", mt5:"99887766", nick:"Delta",  promo:"—", created:"2025-12-10" },
+    // Added "id" so Remove can target the correct user.
+    let users = [
+      { id:"u1", email:"alpha@example.com", verified:true,  sub:"active",   mt5:"12345678", nick:"Domino", promo:"—", created:"2025-12-26" },
+      { id:"u2", email:"bravo@example.com", verified:true,  sub:"past_due", mt5:"88990011", nick:"BRAVO",  promo:"1mo100", created:"2025-12-26" },
+      { id:"u3", email:"charlie@example.com", verified:false, sub:"locked", mt5:"—",       nick:"—",      promo:"—", created:"2025-12-27" },
+      { id:"u4", email:"family@example.com", verified:true,  sub:"active",   mt5:"44556677", nick:"FAMILY", promo:"FAMILY100", created:"2025-12-20" },
+      { id:"u5", email:"delta@example.com", verified:true,  sub:"canceled", mt5:"99887766", nick:"Delta",  promo:"—", created:"2025-12-10" },
     ];
 
     const tbody = document.getElementById("tbody");
@@ -390,6 +359,22 @@
 
     function yesNo(v){
       return v ? pill("Yes", "ok") : pill("No", "warn");
+    }
+
+    // NEW: Remove user (DEMO: removes from this page list)
+    async function removeUser(userId){
+      const u = users.find(x => x.id === userId);
+      if(!u) return;
+
+      const ok = confirm(`REMOVE USER?\n\n${u.email}\n\nThis removes them from the admin list.\n(When database is wired, this will delete them for real.)`);
+      if(!ok) return;
+
+      // DEMO removal:
+      users = users.filter(x => x.id !== userId);
+      render();
+
+      // LATER (REAL): swap to API call like this:
+      // await fetch("/api/admin/users/" + encodeURIComponent(userId), { method:"DELETE", credentials:"include" });
     }
 
     function render(){
@@ -418,6 +403,9 @@
               <button class="btn-small btn-green" onclick="alert('Demo: Clear MT5 account (allow rebind).')">Clear MT5</button>
               <button class="btn-small btn-red" onclick="alert('Demo: Lock account (ban).')">Lock</button>
               <button class="btn-small" onclick="alert('Demo: View user detail page (next).')">View</button>
+
+              <!-- NEW BUTTON -->
+              <button class="btn-small btn-red" onclick="removeUser('${u.id}')">Remove</button>
             </div>
           </td>
         </tr>
@@ -441,69 +429,6 @@
     });
 
     render();
-
-    // ===========================
-    // ✅ ADDED (ONLY ADDITION): bind your MT5 + nickname like customers
-    // Uses your existing API routes:
-    //   GET  /api/me
-    //   POST /api/mt5/bind
-    // ===========================
-    const API = "/api";
-
-    function setAdminPill(elId, ok, okText="Active", badText="Inactive"){
-      const el = document.getElementById(elId);
-      if(!el) return;
-      el.className = "pill " + (ok ? "ok" : "warn");
-      el.innerHTML = `<span class="dot"></span>${ok ? okText : badText}`;
-    }
-
-    async function loadAdminBind(){
-      try{
-        const res = await fetch(API + "/me", { credentials: "include" });
-        if(!res.ok){
-          // if not logged in, send to login
-          // (same behavior as dashboard)
-          location.href = "/login.html";
-          return;
-        }
-        const d = await res.json();
-
-        document.getElementById("adminEmail").value = d.email || "";
-        if(d.mt5_account) document.getElementById("adminMt5").value = d.mt5_account;
-        if(d.nickname) document.getElementById("adminNick").value = d.nickname;
-
-        setAdminPill("adminSubPill", !!d.subscription_active, "Sub Active", "Sub Inactive");
-        setAdminPill("adminVerifiedPill", !!d.email_verified, "Email Verified", "Email Not Verified");
-      }catch(e){
-        document.getElementById("adminSaveMsg").textContent = "Error loading your profile.";
-      }
-    }
-
-    document.getElementById("btnAdminSave").addEventListener("click", async () => {
-      const mt5 = document.getElementById("adminMt5").value.trim();
-      const nickname = document.getElementById("adminNick").value.trim();
-      if(!mt5 || !nickname){
-        document.getElementById("adminSaveMsg").textContent = "Enter MT5 + Nickname.";
-        return;
-      }
-
-      try{
-        const r = await fetch(API + "/mt5/bind", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ mt5, nickname })
-        });
-
-        document.getElementById("adminSaveMsg").textContent = r.ok ? "Saved." : "Error saving.";
-        if(r.ok) setTimeout(loadAdminBind, 300);
-      }catch(e){
-        document.getElementById("adminSaveMsg").textContent = "Error saving.";
-      }
-    });
-
-    loadAdminBind();
-    // ✅ END ADDED SECTION
   </script>
 </body>
 </html>
