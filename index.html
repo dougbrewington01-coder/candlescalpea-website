@@ -2,26 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CandleScalpEA — Official Website</title>
-  <meta name="description" content="CandleScalpEA — a disciplined candle-by-candle scalper built for prop-style risk rules. Licensing, downloads, and updates." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CandleScalpEA 5.0 (MT5) — Official Site</title>
+  <meta name="description" content="CandleScalpEA 5.0 (MT5) by Doug Brewington (AKA DOMINO). Subscription licensing, MT5 account binding, nickname verification." />
   <style>
     :root{
       --bg:#0b1220;
-      --card:#0f1a33;
-      --card2:#0c1730;
-      --text:#e9eefc;
-      --muted:#a8b3d6;
+      --card:#0f1a2e;
+      --card2:#0e172a;
+      --text:#e7eefc;
+      --muted:#a9b8d6;
+      --line:rgba(255,255,255,.10);
       --brand:#6ee7ff;
-      --brand2:#8b5cf6;
+      --brand2:#7c3aed;
       --good:#22c55e;
       --warn:#f59e0b;
       --bad:#ef4444;
-      --line:rgba(255,255,255,.10);
-      --shadow: 0 18px 50px rgba(0,0,0,.45);
-      --radius:18px;
-      --radius2:26px;
-      --max:1100px;
+      --shadow: 0 18px 55px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --max: 1120px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -30,522 +30,500 @@
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(110,231,255,.18), transparent 60%),
-        radial-gradient(900px 600px at 85% 20%, rgba(139,92,246,.18), transparent 55%),
-        radial-gradient(900px 600px at 50% 120%, rgba(34,197,94,.10), transparent 55%),
-        var(--bg);
-      line-height:1.45;
+        radial-gradient(1000px 600px at 15% 10%, rgba(110,231,255,.16), transparent 60%),
+        radial-gradient(900px 500px at 80% 15%, rgba(124,58,237,.14), transparent 60%),
+        radial-gradient(900px 500px at 50% 80%, rgba(34,197,94,.08), transparent 60%),
+        linear-gradient(180deg, #070b14 0%, var(--bg) 40%, #070b14 100%);
     }
     a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:24px}
-    .nav{
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .topbar{
       position:sticky; top:0; z-index:50;
       backdrop-filter: blur(10px);
-      background: linear-gradient(to bottom, rgba(11,18,32,.85), rgba(11,18,32,.55));
-      border-bottom:1px solid var(--line);
+      background: rgba(7,11,20,.55);
+      border-bottom: 1px solid var(--line);
     }
-    .nav-inner{
-      max-width:var(--max); margin:0 auto; padding:14px 24px;
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
     }
     .brand{
-      display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;
+      display:flex; align-items:center; gap:10px;
+      font-weight:700;
+      letter-spacing:.2px;
     }
-    .logo{
-      width:34px; height:34px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(110,231,255,1), rgba(139,92,246,1));
-      box-shadow: 0 10px 30px rgba(110,231,255,.18);
-      position:relative;
+    .brand-badge{
+      width:38px; height:38px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(110,231,255,.9), rgba(124,58,237,.7)),
+        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+      box-shadow: 0 10px 30px rgba(110,231,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      display:grid; place-items:center;
+      font-size:18px;
     }
-    .logo:after{
-      content:""; position:absolute; inset:8px;
-      border-radius:9px;
-      background: rgba(11,18,32,.80);
-      border:1px solid rgba(255,255,255,.18);
+    .brand small{display:block; font-weight:500; color:var(--muted); margin-top:2px}
+    nav{
+      display:flex; align-items:center; gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .nav-links{display:flex; gap:14px; align-items:center; flex-wrap:wrap}
-    .nav-links a{
-      color:var(--muted);
+    .navlink{
+      padding:10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      border: 1px solid transparent;
+      transition: .15s ease;
       font-weight:600;
-      padding:10px 10px;
-      border-radius:12px;
+      font-size:14px;
     }
-    .nav-links a:hover{color:var(--text); background:rgba(255,255,255,.06)}
-    .cta-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:11px 14px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.06);
-      color:var(--text);
+    .navlink:hover{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+    }
+    .cta{
+      padding:10px 14px;
+      border-radius: 12px;
       font-weight:800;
-      cursor:pointer;
-      transition: transform .08s ease, background .15s ease, border .15s ease;
-      box-shadow: 0 8px 25px rgba(0,0,0,.20);
+      border:1px solid rgba(255,255,255,.16);
+      background:
+        linear-gradient(135deg, rgba(110,231,255,.22), rgba(124,58,237,.22));
+      box-shadow: 0 16px 40px rgba(124,58,237,.12);
     }
-    .btn:hover{background:rgba(255,255,255,.10); border-color:rgba(255,255,255,.22)}
-    .btn:active{transform: translateY(1px)}
-    .btn.primary{
-      border:0;
-      background: linear-gradient(135deg, rgba(110,231,255,1), rgba(139,92,246,1));
-      color:#071022;
+    .cta:hover{filter:brightness(1.05)}
+    .hero{
+      padding:56px 0 30px;
     }
-    .btn.primary:hover{filter:brightness(1.02)}
-    .hero{padding:54px 0 18px}
     .hero-grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
       gap:18px;
       align-items:stretch;
     }
-    @media (max-width: 920px){
-      .hero-grid{grid-template-columns: 1fr; }
-      .nav-links{display:none}
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr}
     }
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border: 1px solid var(--line);
-      border-radius: var(--radius2);
+      background: rgba(15,26,46,.72);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
     }
     .hero-left{padding:28px}
+    .hero-right{padding:22px}
     .kicker{
-      display:inline-flex; align-items:center; gap:8px;
+      display:inline-flex; gap:8px; align-items:center;
       padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
       background: rgba(255,255,255,.06);
-      color:var(--muted);
+      border: 1px solid rgba(255,255,255,.10);
+      color: var(--muted);
       font-weight:700;
       font-size:13px;
     }
-    .dot{
-      width:9px; height:9px; border-radius:50%;
-      background: var(--good);
-      box-shadow: 0 0 0 4px rgba(34,197,94,.16);
+    .kdot{
+      width:8px; height:8px; border-radius:99px;
+      background: var(--brand);
+      box-shadow: 0 0 0 4px rgba(110,231,255,.12);
     }
     h1{
       margin:14px 0 10px;
-      font-size: clamp(30px, 4.2vw, 54px);
-      line-height: 1.04;
-      letter-spacing: -0.6px;
+      font-size: 42px;
+      line-height: 1.08;
+      letter-spacing: -.6px;
+    }
+    @media (max-width: 520px){
+      h1{font-size:34px}
     }
     .sub{
-      color:var(--muted);
-      font-size: clamp(15px, 1.5vw, 18px);
-      max-width: 62ch;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0 0 18px;
     }
-    .hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
-    .pill-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
-    .pill{
-      display:inline-flex; gap:10px; align-items:center;
-      padding:10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.14);
-      color:var(--muted);
+    .byline{
+      margin-top:12px;
+      color: rgba(231,238,252,.92);
       font-weight:700;
-      font-size:13px;
     }
-    .pill b{color:var(--text)}
-    .hero-right{padding:18px; display:flex; flex-direction:column; gap:12px}
-    .mini{
-      background: rgba(0,0,0,.20);
-      border:1px solid rgba(255,255,255,.12);
-      border-radius: var(--radius);
-      padding:14px;
+    .byline span{color:var(--muted); font-weight:600}
+    .warnline{
+      margin-top:14px;
+      padding:10px 12px;
+      border-radius: 14px;
+      background: rgba(245,158,11,.10);
+      border: 1px solid rgba(245,158,11,.22);
+      color: rgba(255,244,219,.92);
+      font-weight:700;
+      font-size: 13px;
     }
-    .mini h3{margin:0 0 6px; font-size:14px}
-    .mini p{margin:0; color:var(--muted); font-size:13px}
-    .stats{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
+    .hero-actions{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:18px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
       gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      font-weight:800;
+      color: var(--text);
+      transition:.15s ease;
     }
-    .stat{
-      padding:12px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
+    .btn:hover{background: rgba(255,255,255,.08)}
+    .btn.primary{
+      border-color: rgba(110,231,255,.30);
+      background: linear-gradient(135deg, rgba(110,231,255,.22), rgba(124,58,237,.22));
     }
-    .stat .num{font-weight:900; font-size:18px}
-    .stat .lbl{color:var(--muted); font-weight:700; font-size:12px; margin-top:4px}
-    .section{padding:22px 0}
+    .pillgrid{
+      display:grid; gap:10px;
+      margin-top:14px;
+    }
+    .pill{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px 12px;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.10);
+    }
+    .icon{
+      width:30px; height:30px; border-radius: 10px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(110,231,255,.10);
+      flex:0 0 auto;
+      margin-top:1px;
+    }
+    .pill b{display:block; margin-bottom:3px}
+    .pill p{margin:0; color:var(--muted); font-size:13px; line-height:1.5}
+    .section{
+      padding: 24px 0;
+    }
     .section h2{
-      margin:0 0 12px;
-      font-size: 26px;
-      letter-spacing: -0.4px;
+      margin:0 0 10px;
+      font-size: 22px;
+      letter-spacing: -.2px;
+    }
+    .section .lead{
+      margin:0 0 14px;
+      color: var(--muted);
+      line-height:1.65;
+      font-size: 15px;
     }
     .grid3{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
       gap:14px;
+      grid-template-columns: repeat(3, 1fr);
     }
-    @media (max-width: 920px){ .grid3{grid-template-columns:1fr} }
-    .feat{padding:16px}
-    .feat .icon{
-      width:38px; height:38px; border-radius:14px;
-      display:flex; align-items:center; justify-content:center;
-      background: rgba(110,231,255,.12);
-      border:1px solid rgba(110,231,255,.18);
-      margin-bottom:10px;
-      font-weight:900;
-      color: var(--brand);
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+    .mini{
+      padding:16px;
+      border-radius: var(--radius);
+      background: rgba(15,26,46,.62);
+      border: 1px solid rgba(255,255,255,.10);
     }
-    .feat h3{margin:0 0 8px}
-    .feat p{margin:0; color:var(--muted)}
-    .split{
-      display:grid; grid-template-columns: 1fr 1fr; gap:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 920px){ .split{grid-template-columns:1fr} }
-    .box{padding:18px}
-    .list{margin:10px 0 0; padding:0; list-style:none}
-    .list li{
-      display:flex; gap:10px;
-      padding:10px 0;
-      border-bottom:1px dashed rgba(255,255,255,.12);
-      color:var(--muted);
-      font-weight:650;
-    }
-    .list li:last-child{border-bottom:0}
-    .check{
-      width:22px; height:22px; border-radius:7px;
-      display:inline-flex; align-items:center; justify-content:center;
-      background: rgba(34,197,94,.14);
-      border:1px solid rgba(34,197,94,.28);
-      color: var(--good);
-      flex:0 0 auto;
-      font-weight:900;
+    .mini h3{margin:8px 0 6px; font-size:16px}
+    .mini p{margin:0; color:var(--muted); font-size:13px; line-height:1.6}
+    .divider{
+      height:1px; background: var(--line);
+      margin: 18px 0;
     }
     .pricing{
-      display:grid; grid-template-columns: 1fr 1fr 1fr;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
       gap:14px;
+      align-items:stretch;
     }
-    @media (max-width: 920px){ .pricing{grid-template-columns:1fr} }
-    .plan{padding:18px; position:relative; overflow:hidden}
-    .plan.pop{
-      border:1px solid rgba(110,231,255,.26);
-      box-shadow: 0 18px 60px rgba(110,231,255,.10);
+    @media (max-width:980px){ .pricing{grid-template-columns:1fr} }
+    .price-card{
+      padding:18px;
     }
-    .badge{
-      position:absolute; top:14px; right:14px;
-      padding:8px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:900;
-      color:#071022;
-      background: linear-gradient(135deg, rgba(110,231,255,1), rgba(139,92,246,1));
-    }
-    .plan h3{margin:0 0 6px}
-    .price{font-size:26px; font-weight:950; margin:8px 0 10px}
-    .price span{font-size:13px; color:var(--muted); font-weight:800}
-    .faq .q{
-      width:100%;
-      text-align:left;
-      padding:14px 14px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:var(--text);
-      font-weight:900;
-      cursor:pointer;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-    }
-    .faq .a{
-      display:none;
-      padding:12px 14px 4px;
-      color:var(--muted);
-      font-weight:650;
-    }
-    .faq .item{margin-bottom:10px}
-    .footer{
-      padding:26px 0 40px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    .footer .row{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;
-      border-top:1px solid var(--line);
-      padding-top:18px;
-    }
-    .tiny{opacity:.9}
-    .notice{
-      margin-top:10px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid rgba(245,158,11,.22);
-      background: rgba(245,158,11,.08);
-      color: #ffe8bf;
-      font-weight:700;
-      font-size:13px;
+    .price{
+      font-size:36px; font-weight:900; letter-spacing:-.6px;
+      margin:6px 0 4px;
     }
     .muted{color:var(--muted)}
-    .anchor{scroll-margin-top:88px}
+    ul.clean{
+      padding-left:18px; margin:12px 0 0;
+      color:var(--muted);
+      line-height:1.8;
+    }
+    .faq{
+      display:grid;
+      gap:10px;
+    }
+    details{
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      padding: 10px 12px;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:800;
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+    footer{
+      padding: 28px 0 46px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footrow{
+      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+      border-top:1px solid var(--line);
+      padding-top:16px;
+    }
+    .tag{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color:var(--muted);
+      font-weight:800;
+      font-size:12px;
+    }
+    .sr{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden}
   </style>
 </head>
 
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#top">
+        <div class="brand-badge" aria-hidden="true">🕯️</div>
         <div>
-          <div style="font-size:14px; line-height:1.1;">CandleScalpEA</div>
-          <div style="font-size:12px; color:var(--muted); font-weight:700; margin-top:1px;">Official Site</div>
+          CandleScalpEA <span class="muted">Official Site</span>
+          <small>CandleScalpEA 5.0 (MT5) • v1.31</small>
         </div>
-      </div>
+      </a>
 
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#features">Features</a>
-        <a href="#how">How it works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
+      <!-- ✅ FIX: 4 LINKS -->
+      <nav aria-label="Primary navigation">
+        <a class="navlink" href="login.html">Login</a>
+        <a class="navlink" href="register.html">Register</a>
+        <a class="navlink" href="#pricing">Pricing</a>
+        <a class="navlink cta" href="#download">Download</a>
       </nav>
-
-      <div class="cta-row">
-        <a class="btn" href="#download">Download</a>
-        <a class="btn primary" href="#get">Get Started</a>
-      </div>
     </div>
   </header>
 
-  <main class="wrap">
+  <!-- HERO -->
+  <main id="top" class="wrap">
     <section class="hero">
       <div class="hero-grid">
         <div class="card hero-left">
-          <div class="kicker"><span class="dot"></span> Live deployment is working — updates auto-deploy from GitHub</div>
-          <h1>Prop-style discipline.<br/>Candle-by-candle execution.</h1>
+          <div class="kicker"><span class="kdot"></span> MT5 Subscription License • Account + Nickname Bind</div>
+          <h1>CandleScalpEA 5.0 (MT5)</h1>
           <p class="sub">
-            CandleScalpEA is a focused scalper built around clean rules, consistent execution, and simple setups.
-            This website will host licensing, downloads, and updates.
+            Designed for prop-firm style trading with license protection.
+            Subscribers log in, purchase, bind <b>1 MT5 account</b> + <b>case-sensitive nickname</b>, then download the EA.
           </p>
+
+          <div class="byline">
+            Created by: <b>Doug Brewington (AKA DOMINO)</b>
+            <div><span>Domain:</span> CandleScalpEA.com</div>
+          </div>
+
+          <div class="warnline">
+            ⚠️ Make sure you are using a MetaTrader 5 account.
+          </div>
 
           <div class="hero-actions">
-            <a class="btn primary" href="#get">Get Started</a>
-            <a class="btn" href="#features">See Features</a>
-          </div>
-
-          <div class="pill-row">
-            <div class="pill"><b>Nickname</b> + <b>MT5 Account#</b> licensing (manual input)</div>
-            <div class="pill"><b>Auto-deploy</b> on updates</div>
-            <div class="pill">Simple <b>static site</b> foundation</div>
-          </div>
-
-          <div class="notice">
-            Next step: we’ll add the **real pages** (Pricing, Download, Contact, License portal) one by one.
-            For now, this landing page confirms everything is wired correctly.
+            <a class="btn primary" href="register.html">Create Account</a>
+            <a class="btn" href="login.html">Sign In</a>
+            <a class="btn" href="#pricing">View Pricing</a>
           </div>
         </div>
 
-        <div class="card hero-right">
-          <div class="mini">
-            <h3>Status</h3>
-            <p><b style="color:var(--good)">Healthy</b> — site is live and served from DigitalOcean.</p>
+        <aside class="card hero-right">
+          <h2 style="margin:0 0 10px;">Quick Highlights</h2>
+          <div class="pillgrid">
+            <div class="pill">
+              <div class="icon">🔒</div>
+              <div>
+                <b>Anti-Sharing License</b>
+                <p>License binds to MT5 Account # + Nickname (case-sensitive). Unlimited re-binds (1 active at a time).</p>
+              </div>
+            </div>
+            <div class="pill">
+              <div class="icon">⚡</div>
+              <div>
+                <b>Instant Lock on Failed Payment</b>
+                <p>If subscription becomes inactive, license soft-locks: no new trades, but can manage/close existing positions.</p>
+              </div>
+            </div>
+            <div class="pill">
+              <div class="icon">🏷️</div>
+              <div>
+                <b>Promo Codes</b>
+                <p>Admin can create/disable promo codes (100% off, % off, one-month free, or forever).</p>
+              </div>
+            </div>
           </div>
-          <div class="mini stats">
-            <div class="stat">
-              <div class="num">GitHub</div>
-              <div class="lbl">Source repo</div>
-            </div>
-            <div class="stat">
-              <div class="num">Main</div>
-              <div class="lbl">Deployment branch</div>
-            </div>
-            <div class="stat">
-              <div class="num">Static</div>
-              <div class="lbl">Build strategy</div>
-            </div>
-            <div class="stat">
-              <div class="num">Auto</div>
-              <div class="lbl">Output directory</div>
-            </div>
-          </div>
-
-          <div class="mini">
-            <h3>What’s coming</h3>
-            <p class="muted">Login, email verification, subscription status, MT5 binding, download links, admin panel.</p>
-          </div>
-        </div>
+        </aside>
       </div>
     </section>
 
-    <section id="features" class="section anchor">
-      <h2>Core features</h2>
-      <div class="grid3">
-        <div class="card feat">
-          <div class="icon">✓</div>
-          <h3>Clear rules</h3>
-          <p>Designed around consistent execution and clean decision points. No clutter.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">⚡</div>
-          <h3>Fast updates</h3>
-          <p>When you commit to GitHub, DigitalOcean redeploys automatically.</p>
-        </div>
-        <div class="card feat">
-          <div class="icon">🔒</div>
-          <h3>Licensing ready</h3>
-          <p>Built to support Nickname + MT5 Account# checks as the website evolves.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="how" class="section anchor">
-      <div class="split">
-        <div class="card box">
-          <h2>How it works</h2>
-          <ul class="list">
-            <li><span class="check">1</span> You install the EA in MT5.</li>
-            <li><span class="check">2</span> You enter your <b>Nickname</b> and <b>MT5 Account#</b>.</li>
-            <li><span class="check">3</span> The EA checks license status (website/API later).</li>
-            <li><span class="check">4</span> If active, the EA runs normally. If inactive, it locks safely.</li>
-          </ul>
-          <p class="muted" style="margin-top:12px;">
-            This page is the “foundation.” Next we’ll add the real license portal and download page.
-          </p>
-        </div>
-
-        <div class="card box">
-          <h2>Quick links</h2>
-          <p class="muted">Buttons are placeholders right now. We’ll wire them up as we add pages.</p>
-          <div class="hero-actions" style="margin-top:12px;">
-            <a class="btn" href="#download">Download</a>
-            <a class="btn" href="#pricing">Pricing</a>
-            <a class="btn primary" href="#get">Get Started</a>
-          </div>
-          <div class="notice" style="border-color:rgba(110,231,255,.20); background:rgba(110,231,255,.08); color:#d7fbff;">
-            Want it to look even more like the “full site”? Next we can add a top nav, sections, and a clean pricing table (already stubbed below).
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing" class="section anchor">
-      <h2>Pricing (placeholder)</h2>
-      <p class="muted" style="margin-top:-4px; max-width:70ch;">
-        This section is here so the site looks complete. We’ll replace these with your real subscription options and promo handling.
+    <!-- FEATURES -->
+    <section id="features" class="section">
+      <h2>Features</h2>
+      <p class="lead">
+        Everything your subscribers need, plus everything you need as the admin to control access quickly.
       </p>
 
-      <div class="pricing" style="margin-top:14px;">
-        <div class="card plan">
-          <h3>Starter</h3>
-          <div class="price">$0 <span>/ test</span></div>
-          <ul class="list">
-            <li><span class="check">✓</span> Basic download page</li>
-            <li><span class="check">✓</span> Updates</li>
-            <li><span class="check">✓</span> Email support</li>
-          </ul>
-          <div class="hero-actions" style="margin-top:14px;">
-            <a class="btn" href="#get">Choose</a>
-          </div>
+      <div class="grid3">
+        <div class="mini">
+          <div class="tag">✅ Email Verified Signup</div>
+          <h3>Verified Accounts Only</h3>
+          <p>Email verification is required before a user can purchase or bind a license.</p>
         </div>
-
-        <div class="card plan pop">
-          <div class="badge">Most popular</div>
-          <h3>Monthly</h3>
-          <div class="price">$XX <span>/ month</span></div>
-          <ul class="list">
-            <li><span class="check">✓</span> Full EA access</li>
-            <li><span class="check">✓</span> License checks</li>
-            <li><span class="check">✓</span> Priority support</li>
-          </ul>
-          <div class="hero-actions" style="margin-top:14px;">
-            <a class="btn primary" href="#get">Choose</a>
-          </div>
+        <div class="mini">
+          <div class="tag">✅ One Active MT5 Bind</div>
+          <h3>One Account Per Subscription</h3>
+          <p>Each subscriber can have only one active MT5 account bound at a time. Changes are unlimited.</p>
         </div>
-
-        <div class="card plan">
-          <h3>Lifetime</h3>
-          <div class="price">$XXX <span>/ once</span></div>
-          <ul class="list">
-            <li><span class="check">✓</span> One-time purchase</li>
-            <li><span class="check">✓</span> Updates included</li>
-            <li><span class="check">✓</span> License transfer policy</li>
-          </ul>
-          <div class="hero-actions" style="margin-top:14px;">
-            <a class="btn" href="#get">Choose</a>
-          </div>
+        <div class="mini">
+          <div class="tag">✅ Admin Control</div>
+          <h3>Instant Actions</h3>
+          <p>Disable license, clear bind, lock/unlock user, and manage promo codes from the admin page.</p>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="section faq anchor">
+    <div class="divider"></div>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="section">
+      <h2>How It Works</h2>
+      <p class="lead">
+        Simple flow: register → verify email → subscribe → bind account → download → trade.
+      </p>
+
+      <div class="grid3">
+        <div class="mini">
+          <div class="tag">1</div>
+          <h3>Create Account</h3>
+          <p>Register with email + password, then verify your email before doing anything else.</p>
+        </div>
+        <div class="mini">
+          <div class="tag">2</div>
+          <h3>Subscribe + Promo Code</h3>
+          <p>Purchase the $50/month subscription (promo codes supported).</p>
+        </div>
+        <div class="mini">
+          <div class="tag">3</div>
+          <h3>Bind + Download</h3>
+          <p>Enter MT5 Account # + Nickname (case-sensitive), then download the EA file.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PRICING -->
+    <section id="pricing" class="section">
+      <h2>Pricing</h2>
+      <p class="lead">
+        Simple subscription pricing. No refunds. License access requires an active subscription.
+      </p>
+
+      <div class="pricing">
+        <div class="card price-card">
+          <div class="tag">Subscription</div>
+          <div class="price">$50<span class="muted" style="font-size:16px; font-weight:800;">/month</span></div>
+          <p class="muted" style="margin:0 0 10px; line-height:1.6;">
+            Includes access to CandleScalpEA 5.0 (MT5) and license validation tied to your MT5 Account # + Nickname.
+          </p>
+          <ul class="clean">
+            <li>Email verification required</li>
+            <li>1 active MT5 account bind per subscriber</li>
+            <li>Unlimited account changes (prop firm upgrades)</li>
+            <li>Payment failure = immediate soft-lock</li>
+            <li>No refunds</li>
+          </ul>
+
+          <div class="hero-actions" style="margin-top:16px;">
+            <a class="btn primary" href="register.html">Register</a>
+            <a class="btn" href="login.html">Login</a>
+          </div>
+        </div>
+
+        <div class="card price-card" id="download">
+          <div class="tag">Download</div>
+          <h3 style="margin:8px 0 6px;">Download after purchase</h3>
+          <p class="muted" style="margin:0; line-height:1.7;">
+            After you subscribe and bind your MT5 Account # and Nickname, you’ll see the download button in your dashboard.
+          </p>
+          <div class="divider" style="margin:14px 0;"></div>
+          <p class="muted" style="margin:0; line-height:1.7;">
+            If your payment fails, download remains visible but the license becomes inactive (no new trades).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
       <h2>FAQ</h2>
-      <div class="item">
-        <button class="q" type="button">Why not Python here? <span>+</span></button>
-        <div class="a">
-          Because you created a <b>Static Site</b>. Static sites serve <b>HTML/CSS/JS</b>. Python would require a “Web Service” app (server).
-        </div>
-      </div>
-      <div class="item">
-        <button class="q" type="button">Will the site update automatically? <span>+</span></button>
-        <div class="a">
-          Yes. When you commit changes to the <b>main</b> branch, DigitalOcean redeploys automatically (you already enabled auto-deploy).
-        </div>
-      </div>
-      <div class="item">
-        <button class="q" type="button">What’s the next real step? <span>+</span></button>
-        <div class="a">
-          Next we add actual pages: <b>download.html</b>, <b>pricing.html</b>, and a simple <b>contact</b> page — then later a real license portal/API.
-        </div>
+      <p class="lead">Quick answers for your subscribers.</p>
+
+      <div class="faq">
+        <details>
+          <summary>How do I install the EA?</summary>
+          <p>After purchase, download the .ex5 from your dashboard and place it in your MT5 Experts folder. Then restart MT5 and attach it to a chart.</p>
+        </details>
+
+        <details>
+          <summary>How do I bind my account?</summary>
+          <p>In your dashboard, enter your MT5 Account # and your Nickname (case-sensitive). The EA input Nickname must match exactly.</p>
+        </details>
+
+        <details>
+          <summary>My prop firm changed my MT5 account number — what do I do?</summary>
+          <p>Go to your dashboard and replace your MT5 Account # and/or Nickname. Changes are unlimited, but only 1 active account can be bound at a time.</p>
+        </details>
+
+        <details>
+          <summary>What happens if my payment fails?</summary>
+          <p>Your license becomes inactive immediately (soft lock): the EA stays on chart and can manage/close existing trades, but will not open new trades.</p>
+        </details>
+
+        <details>
+          <summary>Do you offer refunds?</summary>
+          <p>No. All sales are final.</p>
+        </details>
       </div>
     </section>
 
-    <section id="download" class="section anchor">
-      <div class="card box">
-        <h2>Download</h2>
-        <p class="muted">
-          Download links will go here. For now, this confirms your hosting + auto deploy is working.
-        </p>
-      </div>
-    </section>
-
-    <section id="get" class="section anchor">
-      <div class="card box">
-        <h2>Get Started</h2>
-        <p class="muted">
-          Coming next: a real “Create account / Verify email / Subscribe / Download EA” flow.
-        </p>
-        <div class="hero-actions" style="margin-top:12px;">
-          <a class="btn primary" href="#download">Go to Download</a>
-          <a class="btn" href="#faq">Read FAQ</a>
+    <footer>
+      <div class="footrow">
+        <div>
+          <b>CandleScalpEA 5.0 (MT5)</b> • v1.31<br/>
+          <span class="muted">Created by Doug Brewington (AKA DOMINO)</span>
         </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <div class="row">
-        <div class="tiny">
-          <b style="color:var(--text)">CandleScalpEA</b><br/>
-          <span class="muted">© <span id="yr"></span> — All rights reserved.</span>
-        </div>
-        <div class="tiny" style="max-width:70ch;">
-          <b style="color:var(--text)">Disclaimer</b><br/>
-          Trading involves risk. This website is informational and does not provide financial advice.
-          Use at your own risk and follow your broker/prop rules.
+        <div class="muted">
+          © <span id="year"></span> CandleScalpEA.com • All rights reserved
         </div>
       </div>
     </footer>
   </main>
 
   <script>
-    // FAQ accordion
-    document.querySelectorAll(".faq .item").forEach(item => {
-      const btn = item.querySelector(".q");
-      const ans = item.querySelector(".a");
-      btn.addEventListener("click", () => {
-        const open = ans.style.display === "block";
-        document.querySelectorAll(".faq .a").forEach(a => a.style.display = "none");
-        document.querySelectorAll(".faq .q span").forEach(s => s.textContent = "+");
-        ans.style.display = open ? "none" : "block";
-        btn.querySelector("span").textContent = open ? "+" : "–";
-      });
-    });
-
-    document.getElementById("yr").textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
