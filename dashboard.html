@@ -3,27 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CandleScalpEA Dashboard</title>
-  <meta name="description" content="Customer Dashboard — CandleScalpEA 5.0 (MT5)" />
+  <title>CandleScalpEA — Dashboard</title>
+  <meta name="description" content="CandleScalpEA subscriber dashboard." />
 
   <style>
     :root{
-      --bg:#0b0f19;
-      --panel:rgba(255,255,255,0.06);
-      --panel2:rgba(255,255,255,0.08);
-      --text:rgba(255,255,255,0.92);
-      --muted:rgba(255,255,255,0.70);
-      --line:rgba(255,255,255,0.10);
-      --shadow:0 20px 80px rgba(0,0,0,0.45);
-      --radius:18px;
-      --radius2:14px;
-      --max:1120px;
+      --bg: #0b0f19;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --line: rgba(255,255,255,0.10);
+      --shadow: 0 20px 80px rgba(0,0,0,0.45);
+      --radius: 18px;
+      --radius2: 14px;
+      --max: 1120px;
 
-      --accent:#7c3aed;   /* purple */
-      --accent2:#22c55e;  /* green */
-      --warn:#f59e0b;     /* amber */
-      --bad:#ef4444;      /* red */
+      --accent: #7c3aed;   /* purple */
+      --accent2:#22c55e;   /* green */
+      --warn: #f59e0b;     /* amber */
+      --danger:#ef4444;    /* red */
     }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
@@ -37,59 +38,81 @@
         var(--bg);
       line-height:1.35;
     }
+
     a{ color:inherit; text-decoration:none; }
-    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+    .container{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
 
     /* Top Bar */
     .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
+      position: sticky;
+      top: 0;
+      z-index: 50;
       backdrop-filter: blur(14px);
       background: rgba(11,15,25,0.65);
-      border-bottom:1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
+
     .topbar-inner{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
-      padding:14px 0;
-      flex-wrap:wrap;
+      padding: 14px 0;
     }
+
     .brand{
       display:flex;
       align-items:center;
       gap:12px;
-      min-width:260px;
+      min-width: 260px;
     }
+
     .logo{
-      width:40px;height:40px;
-      border-radius:12px;
+      width:40px; height:40px;
+      border-radius: 12px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%),
         linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
-      box-shadow:0 12px 30px rgba(0,0,0,0.35);
-      border:1px solid rgba(255,255,255,0.18);
-      flex:0 0 auto;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.18);
+      flex: 0 0 auto;
     }
+
     .brand-text{ display:flex; flex-direction:column; gap:2px; }
-    .brand-title{ font-weight:800; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
-    .brand-sub{ font-size:12.5px; color:var(--muted); line-height:1.1; }
+    .brand-title{
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      font-size: 15.5px;
+      line-height: 1.1;
+    }
+    .brand-sub{
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.1;
+    }
 
     .nav-actions{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap: wrap;
+      justify-content:flex-end;
     }
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      height:36px; padding:0 12px; border-radius:12px;
-      border:1px solid rgba(255,255,255,0.14);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.06);
       box-shadow: 0 10px 30px rgba(0,0,0,0.20);
-      font-size:13px; font-weight:650;
+      font-size: 13px;
+      font-weight: 650;
       color: rgba(255,255,255,0.92);
       transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-      white-space:nowrap;
+      white-space: nowrap;
       cursor:pointer;
     }
     .btn:hover{
@@ -105,119 +128,140 @@
       background: rgba(124,58,237,0.28);
       border-color: rgba(124,58,237,0.70);
     }
+    .btn-danger{
+      border-color: rgba(239,68,68,0.55);
+      background: rgba(239,68,68,0.14);
+    }
+    .btn-danger:hover{
+      background: rgba(239,68,68,0.22);
+      border-color: rgba(239,68,68,0.70);
+    }
 
-    /* Page */
-    main{ padding: 28px 0 44px; }
-    h1{ margin:0 0 10px; font-size:26px; letter-spacing:-0.3px; }
-    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:75ch; }
+    /* Content */
+    main{ padding: 34px 0 20px; }
+    .hero-card{
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 200px at 20% 0%, rgba(124,58,237,0.22), transparent 55%);
+      pointer-events:none;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: 26px;
+      letter-spacing: -0.35px;
+      line-height:1.1;
+      position:relative;
+      z-index:1;
+    }
+    .subtitle{
+      margin:0;
+      color: var(--muted);
+      font-size: 14.5px;
+      max-width: 75ch;
+      position:relative;
+      z-index:1;
+    }
 
-    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
-    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+    section{ padding: 18px 0; }
+    .section-title{
+      margin: 0 0 10px;
+      font-size: 16.5px;
+      letter-spacing: -0.2px;
+    }
 
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
     .card{
-      border:1px solid var(--line);
+      border: 1px solid var(--line);
       background: rgba(255,255,255,0.05);
       border-radius: var(--radius2);
-      padding:16px;
+      padding: 16px;
     }
-    .card h2{ margin:0 0 10px; font-size:16px; letter-spacing:-0.2px; }
-    .row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
-    .row:last-child{ border-bottom:none; }
-    .label{ color:var(--muted); font-size:13px; }
-    .value{ font-weight:800; font-size:13.5px; }
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 14.5px;
+      letter-spacing: -0.2px;
+    }
+    .card p{
+      margin:0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
 
     .pill{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      font-size:13px;
-      font-weight:800;
-      white-space:nowrap;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.86);
+      font-size: 12.8px;
+      font-weight: 700;
     }
-    .dot{ width:10px; height:10px; border-radius:50%; background: var(--muted); }
-    .ok{ color: rgba(255,255,255,0.92); border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
-    .ok .dot{ background: var(--accent2); }
-    .warn{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
-    .warn .dot{ background: var(--warn); }
-    .bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
-    .bad .dot{ background: var(--bad); }
+    .pill .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(34,197,94,1);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.18);
+    }
 
-    .help{
-      color: var(--muted);
+    .divider{
+      height:1px;
+      background: rgba(255,255,255,0.10);
+      margin: 12px 0;
+    }
+
+    .note{
+      margin-top:10px;
+      color: rgba(255,255,255,0.78);
       font-size: 13.5px;
+    }
+
+    .download-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
       margin-top:10px;
     }
 
-    input{
-      width:100%;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.25);
-      color: rgba(255,255,255,0.92);
-      outline:none;
-      font-size:14px;
-    }
-    input::placeholder{ color: rgba(255,255,255,0.45); }
-
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    /* Video */
-    .video-wrap{
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      border-radius:16px;
-      overflow:hidden;
-    }
-    .video-top{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.85);
-      font-size:13px;
-      font-weight:800;
-    }
-    .video-box{
-      aspect-ratio:16/9;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color: rgba(255,255,255,0.70);
-      font-size:13.5px;
-      padding: 14px;
-      text-align:center;
-    }
+    .muted{ color: var(--muted); }
 
     footer{
-      padding:26px 0 20px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:12.5px;
-      margin-top:18px;
+      padding: 22px 0 34px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 18px;
     }
 
     @media (max-width: 920px){
-      .grid3{ grid-template-columns: 1fr; }
       .grid2{ grid-template-columns: 1fr; }
       .brand{ min-width:auto; }
+      .topbar-inner{ align-items:flex-start; }
       .nav-actions{ justify-content:flex-start; }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="container">
       <div class="topbar-inner">
@@ -225,139 +269,75 @@
           <div class="logo" aria-hidden="true"></div>
           <div class="brand-text">
             <div class="brand-title">CandleScalpEA 5.0</div>
-            <div class="brand-sub">Customer Dashboard</div>
+            <div class="brand-sub">Subscriber Dashboard</div>
           </div>
         </a>
 
-        <nav class="nav-actions" aria-label="Dashboard actions">
+        <nav class="nav-actions" aria-label="Account actions">
           <a class="btn" href="index.html">Home</a>
-          <a class="btn" href="#download">Download</a>
-          <button class="btn btn-primary" id="btnSignOut" type="button">Sign Out</button>
+          <a class="btn btn-danger" href="login.html">Sign out</a>
         </nav>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <h1>Your Dashboard</h1>
-    <p class="subtitle">
-      This is what customers will use after they subscribe: they’ll see their status, add their MT5 account number + nickname,
-      watch the install video, and download the EA when access is active.
-    </p>
-
-    <!-- STATUS -->
-    <div class="grid3">
-      <div class="card">
-        <h2>Account</h2>
-        <div class="row">
-          <div class="label">Email</div>
-          <div class="value" id="emailVal">you@example.com</div>
-        </div>
-        <div class="row">
-          <div class="label">Email Verified</div>
-          <div class="value">
-            <span class="pill warn" id="emailVerifiedPill"><span class="dot"></span>Not verified</span>
-          </div>
-        </div>
-        <div class="help" id="verifyHelp">
-          Verify your email to unlock subscription + downloads.
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>Subscription</h2>
-        <div class="row">
-          <div class="label">Status</div>
-          <div class="value">
-            <span class="pill warn" id="subPill"><span class="dot"></span>Inactive</span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="label">Plan</div>
-          <div class="value">$50 / month</div>
-        </div>
-        <div class="help" id="subHelp">
-          If payment fails or subscription is inactive, the EA is soft-locked (no new trades).
-        </div>
-      </div>
-
-      <div class="card">
-        <h2>EA</h2>
-        <div class="row">
-          <div class="label">Product</div>
-          <div class="value">CandleScalpEA 5.0 (MT5)</div>
-        </div>
-        <div class="row">
-          <div class="label">Version</div>
-          <div class="value">v1.31</div>
-        </div>
-        <div class="row">
-          <div class="label">Install Check</div>
-          <div class="value">
-            <span class="pill warn" id="installPill"><span class="dot"></span>Not detected</span>
-          </div>
-        </div>
+    <div class="hero-card">
+      <h1>Welcome to your Dashboard</h1>
+      <p class="subtitle">
+        This page is where you access your CandleScalpEA 5.0 download and setup steps.
+      </p>
+      <div style="margin-top:12px; position:relative; z-index:1;">
+        <span class="pill"><span class="dot" aria-hidden="true"></span> Subscription: Active</span>
       </div>
     </div>
 
-    <!-- MT5 + NICKNAME -->
-    <div class="grid2" style="margin-top:14px;">
+    <section>
+      <h2 class="section-title">Download</h2>
       <div class="card">
-        <h2>MT5 Account + Nickname</h2>
+        <h3>CandleScalpEA 5.0 (MT5)</h3>
+        <p class="muted">Download your EA below, then follow the install steps.</p>
 
-        <div class="help" style="margin-top:0;">
-          One active MT5 account at a time per subscription.
-          Nickname is case-sensitive and must match what you type in MT5 EA Inputs.
+        <div class="download-row">
+          <!-- Replace this href with your real file when you’re ready -->
+          <a class="btn btn-primary" href="#" onclick="alert('Download link will appear here when you upload the EA file.'); return false;">
+            Download EA
+          </a>
+
+          <span class="muted" style="font-size:12.8px;">
+            Version: v1.31
+          </span>
         </div>
 
-        <div style="margin-top:12px;">
-          <div class="label" style="margin-bottom:6px;">MT5 Account Number</div>
-          <input id="mt5Input" placeholder="Example: 123456789" />
-        </div>
+        <div class="divider"></div>
 
-        <div style="margin-top:10px;">
-          <div class="label" style="margin-bottom:6px;">Nickname (case-sensitive)</div>
-          <input id="nickInput" placeholder="Example: Domino" />
-        </div>
+        <h3>Install Steps</h3>
+        <p class="muted">
+          1) Download the EA file.<br/>
+          2) Open MT5 → File → Open Data Folder → MQL5 → Experts → paste the EA file.<br/>
+          3) Restart MT5, then add the EA to your chart.<br/>
+          4) In EA Inputs, type your nickname exactly (case-sensitive).
+        </p>
 
-        <div class="actions">
-          <button class="btn btn-primary" type="button" id="btnSave">Save</button>
-          <button class="btn" type="button" id="btnClear">Clear</button>
-        </div>
-
-        <div class="help" id="saveMsg" style="margin-top:10px;"></div>
+        <!-- ✅ Removed: the “I installed it” button and the “hide download to reduce sharing” wording -->
       </div>
+    </section>
 
-      <div class="card" id="download">
-        <h2>Download</h2>
-        <div class="help" style="margin-top:0;">
-          Download is available only when:
-          <b>email verified</b> + <b>subscription active</b>.
+    <section>
+      <h2 class="section-title">Account</h2>
+      <div class="grid2">
+        <div class="card">
+          <h3>Your email</h3>
+          <p class="muted">Shown after login (connected version later).</p>
         </div>
-
-        <div class="actions" style="margin-top:12px;">
-          <a class="btn btn-primary" id="downloadBtn" href="#" style="pointer-events:none; opacity:.55;">Download EA (Locked)</a>
-          <button class="btn" type="button" id="btnAfterInstall" disabled style="opacity:.55;">I Installed It</button>
-        </div>
-
-        <div class="help" id="downloadHelp" style="margin-top:10px;">
-          Once the EA is installed and running, the website can hide the download to reduce sharing.
-        </div>
-      </div>
-    </div>
-
-    <!-- VIDEO -->
-    <section style="margin-top:14px;">
-      <h2 style="margin:0 0 12px; font-size:18px; letter-spacing:-0.2px;">Install Video</h2>
-      <div class="video-wrap">
-        <div class="video-top">
-          <div>How to Download & Install CandleScalpEA 5.0 in MT5</div>
-          <div style="opacity:.8; font-weight:700;">(YouTube placeholder)</div>
-        </div>
-        <div class="video-box">
-          Replace this box later with your YouTube embed on this dashboard page.
+        <div class="card">
+          <h3>MT5 account number + nickname</h3>
+          <p class="muted">Shown after login (connected version later).</p>
         </div>
       </div>
+      <p class="note">
+        If your prop firm changes your MT5 account number, you’ll be able to update it in your account area (connected version later).
+      </p>
     </section>
 
     <footer>
@@ -369,113 +349,5 @@
     </footer>
   </main>
 
-  <script>
-    // NOTE: This dashboard is a "front-end shell" right now.
-    // Next, we will connect it to your API so it becomes real: sign-in, real status, real download lock, etc.
-
-    // Demo toggles (so you can SEE what customers will see)
-    // Change these to preview different states:
-    const DEMO = {
-      email: "customer@example.com",
-      emailVerified: false,
-      subscriptionActive: false,
-      installDetected: false
-    };
-
-    const emailVal = document.getElementById("emailVal");
-    const emailVerifiedPill = document.getElementById("emailVerifiedPill");
-    const subPill = document.getElementById("subPill");
-    const installPill = document.getElementById("installPill");
-
-    const downloadBtn = document.getElementById("downloadBtn");
-    const btnAfterInstall = document.getElementById("btnAfterInstall");
-
-    function setPill(el, state) {
-      el.classList.remove("ok","warn","bad");
-      if (state === "ok") el.classList.add("ok");
-      else if (state === "bad") el.classList.add("bad");
-      else el.classList.add("warn");
-    }
-
-    function refreshUI() {
-      emailVal.textContent = DEMO.email;
-
-      // Email verified
-      if (DEMO.emailVerified) {
-        emailVerifiedPill.innerHTML = '<span class="dot"></span>Verified';
-        setPill(emailVerifiedPill, "ok");
-        document.getElementById("verifyHelp").textContent = "Email verified. You're good.";
-      } else {
-        emailVerifiedPill.innerHTML = '<span class="dot"></span>Not verified';
-        setPill(emailVerifiedPill, "warn");
-        document.getElementById("verifyHelp").textContent = "Verify your email to unlock subscription + downloads.";
-      }
-
-      // Subscription
-      if (DEMO.subscriptionActive) {
-        subPill.innerHTML = '<span class="dot"></span>Active';
-        setPill(subPill, "ok");
-        document.getElementById("subHelp").textContent = "Subscription active. EA will trade (subject to license validation).";
-      } else {
-        subPill.innerHTML = '<span class="dot"></span>Inactive';
-        setPill(subPill, "warn");
-        document.getElementById("subHelp").textContent = "Inactive subscription = EA soft-lock (no new trades).";
-      }
-
-      // Install check
-      if (DEMO.installDetected) {
-        installPill.innerHTML = '<span class="dot"></span>Installed & running';
-        setPill(installPill, "ok");
-      } else {
-        installPill.innerHTML = '<span class="dot"></span>Not detected';
-        setPill(installPill, "warn");
-      }
-
-      // Download lock rules
-      const canDownload = DEMO.emailVerified && DEMO.subscriptionActive;
-      if (canDownload) {
-        downloadBtn.textContent = "Download EA";
-        downloadBtn.style.pointerEvents = "auto";
-        downloadBtn.style.opacity = "1";
-        downloadBtn.href = "#"; // will be replaced with secure link from API
-        btnAfterInstall.disabled = false;
-        btnAfterInstall.style.opacity = "1";
-      } else {
-        downloadBtn.textContent = "Download EA (Locked)";
-        downloadBtn.style.pointerEvents = "none";
-        downloadBtn.style.opacity = ".55";
-        downloadBtn.href = "#";
-        btnAfterInstall.disabled = true;
-        btnAfterInstall.style.opacity = ".55";
-      }
-    }
-
-    refreshUI();
-
-    // Demo save buttons (real save comes when we connect API)
-    document.getElementById("btnSave").addEventListener("click", () => {
-      const mt5 = document.getElementById("mt5Input").value.trim();
-      const nick = document.getElementById("nickInput").value.trim();
-      if (!mt5 || !nick) {
-        document.getElementById("saveMsg").textContent = "Enter MT5 account number and nickname first.";
-        return;
-      }
-      document.getElementById("saveMsg").textContent = "Saved (demo). Next step: connect this to the API so it saves for real.";
-    });
-
-    document.getElementById("btnClear").addEventListener("click", () => {
-      document.getElementById("mt5Input").value = "";
-      document.getElementById("nickInput").value = "";
-      document.getElementById("saveMsg").textContent = "";
-    });
-
-    document.getElementById("btnAfterInstall").addEventListener("click", () => {
-      alert("Demo: We'll wire this to the API so the download can be hidden after install is detected.");
-    });
-
-    document.getElementById("btnSignOut").addEventListener("click", () => {
-      alert("Demo: Sign-out will be real once login is connected.");
-    });
-  </script>
 </body>
 </html>
