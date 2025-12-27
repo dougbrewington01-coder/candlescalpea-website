@@ -3,351 +3,217 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CandleScalpEA — Dashboard</title>
-  <meta name="description" content="CandleScalpEA subscriber dashboard." />
+  <title>CandleScalpEA 5.0 — Dashboard</title>
+  <meta name="description" content="CandleScalpEA 5.0 Subscriber Dashboard" />
 
   <style>
     :root{
-      --bg: #0b0f19;
-      --panel: rgba(255,255,255,0.06);
-      --panel2: rgba(255,255,255,0.08);
-      --text: rgba(255,255,255,0.92);
-      --muted: rgba(255,255,255,0.70);
-      --line: rgba(255,255,255,0.10);
-      --shadow: 0 20px 80px rgba(0,0,0,0.45);
-      --radius: 18px;
-      --radius2: 14px;
-      --max: 1120px;
-
-      --accent: #7c3aed;   /* purple */
-      --accent2:#22c55e;   /* green */
-      --warn: #f59e0b;     /* amber */
-      --danger:#ef4444;    /* red */
+      --bg:#0b0f19;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.7);
+      --line:rgba(255,255,255,.1);
+      --shadow:0 20px 80px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius2:14px;
+      --max:1120px;
+      --accent:#7c3aed;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
       color:var(--text);
       background:
-        radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,0.30), transparent 55%),
-        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,0.18), transparent 55%),
-        radial-gradient(900px 500px at 50% 95%, rgba(59,130,246,0.12), transparent 60%),
+        radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,.3), transparent 55%),
+        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,.18), transparent 55%),
         var(--bg);
-      line-height:1.35;
     }
 
-    a{ color:inherit; text-decoration:none; }
-    .container{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(var(--max),calc(100% - 40px));margin:0 auto}
 
-    /* Top Bar */
+    header{
+      position:sticky;
+      top:0;
+      backdrop-filter:blur(14px);
+      background:rgba(11,15,25,.65);
+      border-bottom:1px solid var(--line);
+      z-index:50;
+    }
+
     .topbar{
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(11,15,25,0.65);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .topbar-inner{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:16px;
-      padding: 14px 0;
+      align-items:center;
+      padding:14px 0;
     }
 
     .brand{
       display:flex;
-      align-items:center;
       gap:12px;
-      min-width: 260px;
+      align-items:center;
     }
 
     .logo{
-      width:40px; height:40px;
-      border-radius: 12px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%),
-        linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.18);
-      flex: 0 0 auto;
+      width:40px;height:40px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#7c3aed,#22c55e);
+      box-shadow:0 12px 30px rgba(0,0,0,.35);
     }
 
-    .brand-text{ display:flex; flex-direction:column; gap:2px; }
-    .brand-title{
-      font-weight: 800;
-      letter-spacing: 0.2px;
-      font-size: 15.5px;
-      line-height: 1.1;
-    }
-    .brand-sub{
-      font-size: 12.5px;
-      color: var(--muted);
-      line-height: 1.1;
-    }
+    .brand-title{font-weight:800;font-size:15.5px}
+    .brand-sub{font-size:12.5px;color:var(--muted)}
 
-    .nav-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap: wrap;
-      justify-content:flex-end;
-    }
     .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      height: 36px;
-      padding: 0 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
-      font-size: 13px;
-      font-weight: 650;
-      color: rgba(255,255,255,0.92);
-      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-      white-space: nowrap;
+      height:36px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:650;
       cursor:pointer;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.22);
-    }
+
     .btn-primary{
-      border-color: rgba(124,58,237,0.55);
-      background: rgba(124,58,237,0.20);
-    }
-    .btn-primary:hover{
-      background: rgba(124,58,237,0.28);
-      border-color: rgba(124,58,237,0.70);
-    }
-    .btn-danger{
-      border-color: rgba(239,68,68,0.55);
-      background: rgba(239,68,68,0.14);
-    }
-    .btn-danger:hover{
-      background: rgba(239,68,68,0.22);
-      border-color: rgba(239,68,68,0.70);
+      background:rgba(124,58,237,.25);
+      border-color:rgba(124,58,237,.6);
     }
 
-    /* Content */
-    main{ padding: 34px 0 20px; }
-    .hero-card{
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 22px;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-card:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(800px 200px at 20% 0%, rgba(124,58,237,0.22), transparent 55%);
-      pointer-events:none;
-    }
-    h1{
-      margin:0 0 10px;
-      font-size: 26px;
-      letter-spacing: -0.35px;
-      line-height:1.1;
-      position:relative;
-      z-index:1;
-    }
-    .subtitle{
-      margin:0;
-      color: var(--muted);
-      font-size: 14.5px;
-      max-width: 75ch;
-      position:relative;
-      z-index:1;
+    main{padding:34px 0}
+
+    .card{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:var(--radius2);
+      padding:18px;
+      box-shadow:var(--shadow);
+      margin-bottom:18px;
     }
 
-    section{ padding: 18px 0; }
-    .section-title{
-      margin: 0 0 10px;
-      font-size: 16.5px;
-      letter-spacing: -0.2px;
-    }
+    h1{margin:0 0 10px;font-size:26px}
+    h2{margin:0 0 8px;font-size:18px}
+    p{margin:0;color:var(--muted);font-size:13.5px}
 
     .grid2{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    .card{
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius2);
-      padding: 16px;
-    }
-    .card h3{
-      margin: 0 0 8px;
-      font-size: 14.5px;
-      letter-spacing: -0.2px;
-    }
-    .card p{
-      margin:0;
-      color: var(--muted);
-      font-size: 13.5px;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
     }
 
-    .pill{
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:700;
+      background:rgba(34,197,94,.18);
+      border:1px solid rgba(34,197,94,.4);
+      color:#d1fae5;
+    }
+
+    .download{
+      margin-top:10px;
       display:inline-flex;
+      gap:10px;
       align-items:center;
-      gap:8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.05);
-      color: rgba(255,255,255,0.86);
-      font-size: 12.8px;
-      font-weight: 700;
     }
-    .pill .dot{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(34,197,94,1);
-      box-shadow: 0 0 0 3px rgba(34,197,94,0.18);
-    }
-
-    .divider{
-      height:1px;
-      background: rgba(255,255,255,0.10);
-      margin: 12px 0;
-    }
-
-    .note{
-      margin-top:10px;
-      color: rgba(255,255,255,0.78);
-      font-size: 13.5px;
-    }
-
-    .download-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-
-    .muted{ color: var(--muted); }
 
     footer{
-      padding: 22px 0 34px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 12.5px;
-      margin-top: 18px;
+      border-top:1px solid var(--line);
+      padding:24px 0 40px;
+      color:var(--muted);
+      font-size:12.5px;
     }
 
-    @media (max-width: 920px){
-      .grid2{ grid-template-columns: 1fr; }
-      .brand{ min-width:auto; }
-      .topbar-inner{ align-items:flex-start; }
-      .nav-actions{ justify-content:flex-start; }
+    @media(max-width:900px){
+      .grid2{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
 
-  <!-- TOP BAR -->
-  <header class="topbar">
-    <div class="container">
-      <div class="topbar-inner">
-        <a class="brand" href="index.html">
-          <div class="logo" aria-hidden="true"></div>
-          <div class="brand-text">
-            <div class="brand-title">CandleScalpEA 5.0</div>
-            <div class="brand-sub">Subscriber Dashboard</div>
-          </div>
-        </a>
-
-        <nav class="nav-actions" aria-label="Account actions">
-          <a class="btn" href="index.html">Home</a>
-          <a class="btn btn-danger" href="login.html">Sign out</a>
-        </nav>
+<header>
+  <div class="container topbar">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <div class="brand-title">CandleScalpEA 5.0</div>
+        <div class="brand-sub">Created by Doug Brewington (AKA DOMINO)</div>
       </div>
     </div>
-  </header>
+    <a class="btn" href="index.html">Home</a>
+  </div>
+</header>
 
-  <main class="container">
-    <div class="hero-card">
-      <h1>Welcome to your Dashboard</h1>
-      <p class="subtitle">
-        This page is where you access your CandleScalpEA 5.0 download and setup steps.
+<main class="container">
+
+  <div class="card">
+    <h1>Subscriber Dashboard</h1>
+    <p>Welcome. Your subscription and license status are shown below.</p>
+  </div>
+
+  <div class="grid2">
+
+    <div class="card">
+      <h2>Subscription Status</h2>
+      <span class="badge">Active</span>
+      <p style="margin-top:8px">
+        Subscription must remain active for the EA to trade.
       </p>
-      <div style="margin-top:12px; position:relative; z-index:1;">
-        <span class="pill"><span class="dot" aria-hidden="true"></span> Subscription: Active</span>
-      </div>
     </div>
 
-    <section>
-      <h2 class="section-title">Download</h2>
-      <div class="card">
-        <h3>CandleScalpEA 5.0 (MT5)</h3>
-        <p class="muted">Download your EA below, then follow the install steps.</p>
-
-        <div class="download-row">
-          <!-- Replace this href with your real file when you’re ready -->
-          <a class="btn btn-primary" href="#" onclick="alert('Download link will appear here when you upload the EA file.'); return false;">
-            Download EA
-          </a>
-
-          <span class="muted" style="font-size:12.8px;">
-            Version: v1.31
-          </span>
-        </div>
-
-        <div class="divider"></div>
-
-        <h3>Install Steps</h3>
-        <p class="muted">
-          1) Download the EA file.<br/>
-          2) Open MT5 → File → Open Data Folder → MQL5 → Experts → paste the EA file.<br/>
-          3) Restart MT5, then add the EA to your chart.<br/>
-          4) In EA Inputs, type your nickname exactly (case-sensitive).
-        </p>
-
-        <!-- ✅ Removed: the “I installed it” button and the “hide download to reduce sharing” wording -->
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-title">Account</h2>
-      <div class="grid2">
-        <div class="card">
-          <h3>Your email</h3>
-          <p class="muted">Shown after login (connected version later).</p>
-        </div>
-        <div class="card">
-          <h3>MT5 account number + nickname</h3>
-          <p class="muted">Shown after login (connected version later).</p>
-        </div>
-      </div>
-      <p class="note">
-        If your prop firm changes your MT5 account number, you’ll be able to update it in your account area (connected version later).
+    <div class="card">
+      <h2>MT5 Account</h2>
+      <p>
+        Account Number: <b>********</b><br>
+        Nickname: <b>CASE-SENSITIVE</b>
       </p>
-    </section>
+      <p style="margin-top:6px">
+        You may update your MT5 account number at any time.
+      </p>
+    </div>
 
-    <footer>
-      <div><b>CandleScalpEA 5.0</b> — Created by Doug Brewington (AKA DOMINO)</div>
-      <div style="margin-top:6px;">
-        Risk Disclosure: Trading involves risk and may not be suitable for all investors. Past performance does not guarantee future results.
-        Use at your own discretion.
-      </div>
-    </footer>
-  </main>
+  </div>
+
+  <div class="card">
+    <h2>EA Download</h2>
+    <p>
+      Download CandleScalpEA 5.0 (MT5). After installing, make sure your nickname
+      is entered exactly in the EA inputs.
+    </p>
+
+    <div class="download">
+      <a class="btn btn-primary" href="download/CandleScalpEA_5_0.ex5">
+        Download EA
+      </a>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Install Video</h2>
+    <p>Watch the video below for step-by-step installation instructions.</p>
+    <div style="margin-top:10px;aspect-ratio:16/9;background:rgba(255,255,255,.04);border-radius:14px;display:flex;align-items:center;justify-content:center;">
+      YouTube video embed goes here
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div><b>CandleScalpEA 5.0</b> — Created by Doug Brewington (AKA DOMINO)</div>
+    <div style="margin-top:6px">
+      Risk Disclosure: Trading involves risk. Use at your own discretion.
+    </div>
+  </div>
+</footer>
 
 </body>
 </html>
