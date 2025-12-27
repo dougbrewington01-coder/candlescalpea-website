@@ -287,6 +287,14 @@
       margin-top: 18px;
     }
 
+    /* PayPal button area */
+    .paypal-wrap{
+      margin-top: 14px;
+      display:flex;
+      justify-content:center;
+      padding: 10px 0 0;
+    }
+
     @media (max-width: 920px){
       .grid3{ grid-template-columns: 1fr; }
       .grid2{ grid-template-columns: 1fr; }
@@ -426,6 +434,11 @@
           <p><b>No refunds.</b><br/>License access requires an active subscription. If your subscription is inactive, the EA will not open new trades.</p>
         </div>
       </div>
+
+      <!-- PAYPAL SUBSCRIBE BUTTON (inserted here) -->
+      <div class="paypal-wrap">
+        <div id="paypal-button-container-P-7V116953VW030642CNFHVMWA"></div>
+      </div>
     </section>
 
     <!-- DOWNLOAD (keep it short — no extra login/register buttons) -->
@@ -471,6 +484,27 @@
       </div>
     </footer>
   </main>
+
+  <!-- PayPal SDK + Button Script (moved to bottom for clean loading) -->
+  <script src="https://www.paypal.com/sdk/js?client-id=Abewm7IiRjqD7ACayRHMH9aYTZsw0-UwhiK95M2qzcE5mGJYAHdgUufOJFrkV6ijNMV9HbpHR4L7JOag&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+  <script>
+    paypal.Buttons({
+      style: {
+        shape: 'pill',
+        color: 'gold',
+        layout: 'vertical',
+        label: 'subscribe'
+      },
+      createSubscription: function(data, actions) {
+        return actions.subscription.create({
+          plan_id: 'P-7V116953VW030642CNFHVMWA'
+        });
+      },
+      onApprove: function(data, actions) {
+        alert(data.subscriptionID);
+      }
+    }).render('#paypal-button-container-P-7V116953VW030642CNFHVMWA');
+  </script>
 
 </body>
 </html>
