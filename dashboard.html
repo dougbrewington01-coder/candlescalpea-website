@@ -117,7 +117,7 @@
     <div class="card">
       <h3>Download</h3>
       <p id="downloadMsg">Locked</p>
-      <a id="downloadBtn" class="btn btn-primary" href="#" disabled>Download EA</a>
+      <a id="downloadBtn" class="btn btn-primary" href="#" data-disabled="1">Download EA</a>
     </div>
   </div>
 
@@ -131,18 +131,29 @@
 const API = "/api";
 
 async function loadDashboard(){
-  const res = await fetch(API + "/me", {credentials:"include"});
-  if(!res.ok){ location.href="/login.html"; return; }
+  const res = await fetch(API + "/me", { credentials: "include" });
+  if(!res.ok){
+    location.href = "/login.html";
+    return;
+  }
+
   const d = await res.json();
 
-  document.getElementById("email").textContent = d.email;
+  document.getElementById("email").textContent = d.email || "—";
+
   setPill("emailStatus", d.email_verified);
   setPill("subStatus", d.subscription_active);
   setPill("eaStatus", d.license_active);
 
-  if(d.email_verified && d.subscription_active){
-    document.getElementById("downloadBtn").removeAttribute("disabled");
-    document.getElementById("downloadBtn").href = API + "/download";
+  if(d.mt5_account) document.getElementById("mt5").value = d.mt5_account;
+  if(d.nickname) document.getElementById("nickname").value = d.nickname;
+
+  const canDownload = d.email_verified && d.subscription_active;
+  const btn = document.getElementById("downloadBtn");
+
+  if(canDownload){
+    btn.dataset.disabled = "0";
+    btn.href = API + "/download";
     document.getElementById("downloadMsg").textContent = "Ready";
   }
 }
@@ -153,9 +164,13 @@ function setPill(id, ok){
   el.className = "pill " + (ok ? "ok" : "warn");
 }
 
+document.getElementById("downloadBtn").addEventListener("click", e=>{
+  if(e.currentTarget.dataset.disabled === "1") e.preventDefault();
+});
+
 document.getElementById("saveBtn").onclick = async ()=>{
-  const mt5 = mt5.value.trim();
-  const nickname = nickname.value.trim();
+  const mt5 = document.getElementById("mt5").value.trim();
+  const nickname = document.getElementById("nickname").value.trim();
   if(!mt5 || !nickname) return;
 
   const r = await fetch(API + "/mt5/bind",{
