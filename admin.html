@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CandleScalpEA Admin</title>
+  <meta name="description" content="Admin — CandleScalpEA 5.0 (MT5)" />
+
+  <style>
+    :root{
+      --bg:#0b0f19;
+      --panel:rgba(255,255,255,0.06);
+      --panel2:rgba(255,255,255,0.08);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.70);
+      --line:rgba(255,255,255,0.10);
+      --shadow:0 20px 80px rgba(0,0,0,0.45);
+      --radius:18px;
+      --radius2:14px;
+      --max:1180px;
+
+      --accent:#7c3aed;   /* purple */
+      --good:#22c55e;     /* green */
+      --warn:#f59e0b;     /* amber */
+      --bad:#ef4444;      /* red */
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,0.30), transparent 55%),
+        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,0.18), transparent 55%),
+        radial-gradient(900px 500px at 50% 95%, rgba(59,130,246,0.12), transparent 60%),
+        var(--bg);
+      line-height:1.35;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+
+    /* Top Bar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(11,15,25,0.65);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:260px;
+    }
+    .logo{
+      width:40px;height:40px;
+      border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%),
+        linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
+      box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      border:1px solid rgba(255,255,255,0.18);
+      flex:0 0 auto;
+    }
+    .brand-text{ display:flex; flex-direction:column; gap:2px; }
+    .brand-title{ font-weight:900; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
+    .brand-sub{ font-size:12.5px; color:var(--muted); line-height:1.1; }
+
+    .nav-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:36px; padding:0 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+      font-size:13px; font-weight:750;
+      color: rgba(255,255,255,0.92);
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+      white-space:nowrap;
+      cursor:pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .btn-primary{ border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.20); }
+    .btn-primary:hover{ background: rgba(124,58,237,0.28); border-color: rgba(124,58,237,0.70); }
+
+    main{ padding: 28px 0 44px; }
+    h1{ margin:0 0 8px; font-size:26px; letter-spacing:-0.3px; }
+    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:80ch; }
+
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius2);
+      padding:16px;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.25);
+    }
+    .card h2{ margin:0 0 10px; font-size:16px; letter-spacing:-0.2px; }
+
+    .stat{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+    .stat:last-child{ border-bottom:none; }
+    .label{ color:var(--muted); font-size:13px; }
+    .value{ font-weight:900; font-size:14px; }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      font-size:13px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .dot{ width:10px; height:10px; border-radius:50%; background: var(--muted); }
+    .ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .ok .dot{ background: var(--good); }
+    .warn{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
+    .warn .dot{ background: var(--warn); }
+    .bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
+    .bad .dot{ background: var(--bad); }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin: 10px 0 0;
+    }
+    input, select{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      color: rgba(255,255,255,0.92);
+      outline:none;
+      font-size:14px;
+    }
+    input::placeholder{ color: rgba(255,255,255,0.45); }
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,0.12);
+      margin-top:12px;
+    }
+    th, td{
+      text-align:left;
+      padding:12px 10px;
+      font-size:13px;
+      border-bottom:1px solid rgba(255,255,255,0.07);
+      vertical-align:middle;
+    }
+    th{
+      font-size:12.5px;
+      color: rgba(255,255,255,0.75);
+      font-weight:900;
+      background: rgba(255,255,255,0.04);
+      letter-spacing:0.2px;
+      position:sticky;
+      top:0;
+      z-index:1;
+    }
+    tr:last-child td{ border-bottom:none; }
+
+    .actions{ display:flex; gap:8px; flex-wrap:wrap; }
+    .btn-small{
+      height:30px;
+      padding:0 10px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      cursor:pointer;
+    }
+    .btn-small:hover{ background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .btn-red{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
+    .btn-green{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .btn-amber{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
+
+    .help{ color:var(--muted); font-size:13.5px; margin-top:10px; }
+
+    footer{
+      padding:26px 0 20px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:12.5px;
+      margin-top:18px;
+    }
+
+    @media (max-width: 980px){
+      .grid3{ grid-template-columns: 1fr; }
+      .grid2{ grid-template-columns: 1fr; }
+      .brand{ min-width:auto; }
+      th{ position:static; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="brand" href="index.html">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="brand-text">
+            <div class="brand-title">CandleScalpEA 5.0</div>
+            <div class="brand-sub">Admin Panel</div>
+          </div>
+        </a>
+
+        <nav class="nav-actions" aria-label="Admin actions">
+          <a class="btn" href="index.html">Home</a>
+          <a class="btn" href="dashboard.html">Customer View</a>
+          <button class="btn btn-primary" type="button" id="btnAdminSignOut">Admin Sign Out</button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Admin Panel</h1>
+    <p class="subtitle">
+      This is what <b>you</b> will use to manage users and access. This page is a <b>demo shell</b> right now (no real data yet).
+      Next we’ll connect it to your API + database so it controls real subscribers.
+    </p>
+
+    <!-- STATS -->
+    <div class="grid3">
+      <div class="card">
+        <h2>Overview</h2>
+        <div class="stat"><div class="label">Total Users</div><div class="value" id="statUsers">12</div></div>
+        <div class="stat"><div class="label">Active Subscriptions</div><div class="value" id="statActive">5</div></div>
+        <div class="stat"><div class="label">Soft-Locked</div><div class="value" id="statLocked">3</div></div>
+      </div>
+
+      <div class="card">
+        <h2>System Status</h2>
+        <div class="stat">
+          <div class="label">API</div>
+          <div class="value"><span class="pill ok"><span class="dot"></span>Online</span></div>
+        </div>
+        <div class="stat">
+          <div class="label">Database</div>
+          <div class="value"><span class="pill ok"><span class="dot"></span>Connected</span></div>
+        </div>
+        <div class="stat">
+          <div class="label">PayPal Webhook</div>
+          <div class="value"><span class="pill ok"><span class="dot"></span>Configured</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Rules (Locked In)</h2>
+        <div class="help" style="margin-top:0;">
+          • Payment fails → <b>soft lock</b> (EA stays on chart, no new trades, can manage/close existing safely)<br/>
+          • Email not verified → <b>no access</b><br/>
+          • One subscription = <b>one active MT5 account at a time</b><br/>
+          • Unlimited MT5 account number changes (prop firm upgrades)<br/>
+          • Promo codes: can be 100% off forever (family) or 100% off for 1 month, and can be enabled/disabled
+        </div>
+      </div>
+    </div>
+
+    <!-- USERS TABLE -->
+    <div class="card" style="margin-top:14px;">
+      <h2>Users</h2>
+
+      <div class="toolbar">
+        <input id="search" placeholder="Search email / nickname / MT5..." style="flex:1; min-width:220px;" />
+        <select id="filter">
+          <option value="all">All</option>
+          <option value="active">Active</option>
+          <option value="past_due">Past Due</option>
+          <option value="canceled">Canceled</option>
+          <option value="locked">Locked</option>
+        </select>
+        <button class="btn" type="button" id="btnExport">Export (Demo)</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Verified</th>
+            <th>Subscription</th>
+            <th>MT5 Account</th>
+            <th>Nickname</th>
+            <th>Promo</th>
+            <th>Created</th>
+            <th style="min-width:250px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="tbody">
+          <!-- Demo rows injected by JS -->
+        </tbody>
+      </table>
+
+      <div class="help">
+        Next step: this table will be fed by your database. Actions will call your API (disable license, clear MT5 account, lock/unlock, etc.).
+      </div>
+    </div>
+
+    <footer>
+      <div><b>CandleScalpEA 5.0</b> — Admin Panel</div>
+      <div style="margin-top:6px;">
+        Internal use only. Do not share this link publicly (we will secure it with admin login when API auth is wired).
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // Demo-only data (so you can SEE what the admin page will look like).
+    const users = [
+      { email:"alpha@example.com", verified:true,  sub:"active",   mt5:"12345678", nick:"Domino", promo:"—", created:"2025-12-26" },
+      { email:"bravo@example.com", verified:true,  sub:"past_due", mt5:"88990011", nick:"BRAVO",  promo:"1mo100", created:"2025-12-26" },
+      { email:"charlie@example.com", verified:false, sub:"locked", mt5:"—",       nick:"—",      promo:"—", created:"2025-12-27" },
+      { email:"family@example.com", verified:true,  sub:"active",   mt5:"44556677", nick:"FAMILY", promo:"FAMILY100", created:"2025-12-20" },
+      { email:"delta@example.com", verified:true,  sub:"canceled", mt5:"99887766", nick:"Delta",  promo:"—", created:"2025-12-10" },
+    ];
+
+    const tbody = document.getElementById("tbody");
+
+    function pill(text, type){
+      const cls = type === "ok" ? "ok" : type === "bad" ? "bad" : "warn";
+      return `<span class="pill ${cls}"><span class="dot"></span>${text}</span>`;
+    }
+
+    function subPill(status){
+      if (status === "active") return pill("Active", "ok");
+      if (status === "past_due") return pill("Past Due", "warn");
+      if (status === "canceled") return pill("Canceled", "warn");
+      if (status === "locked") return pill("Locked", "bad");
+      return pill(status, "warn");
+    }
+
+    function yesNo(v){
+      return v ? pill("Yes", "ok") : pill("No", "warn");
+    }
+
+    function render(){
+      const q = (document.getElementById("search").value || "").toLowerCase().trim();
+      const f = document.getElementById("filter").value;
+
+      const rows = users.filter(u => {
+        const hay = `${u.email} ${u.mt5} ${u.nick}`.toLowerCase();
+        const matchQ = !q || hay.includes(q);
+        const matchF = (f === "all") || (u.sub === f) || (f==="locked" && u.sub==="locked");
+        return matchQ && matchF;
+      });
+
+      tbody.innerHTML = rows.map(u => `
+        <tr>
+          <td><b>${u.email}</b></td>
+          <td>${yesNo(u.verified)}</td>
+          <td>${subPill(u.sub)}</td>
+          <td>${u.mt5}</td>
+          <td>${u.nick}</td>
+          <td>${u.promo}</td>
+          <td>${u.created}</td>
+          <td>
+            <div class="actions">
+              <button class="btn-small btn-amber" onclick="alert('Demo: Soft-lock license (no new trades).')">Soft Lock</button>
+              <button class="btn-small btn-green" onclick="alert('Demo: Clear MT5 account (allow rebind).')">Clear MT5</button>
+              <button class="btn-small btn-red" onclick="alert('Demo: Lock account (ban).')">Lock</button>
+              <button class="btn-small" onclick="alert('Demo: View user detail page (next).')">View</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+
+      // Demo stats
+      document.getElementById("statUsers").textContent = users.length;
+      document.getElementById("statActive").textContent = users.filter(u => u.sub==="active").length;
+      document.getElementById("statLocked").textContent = users.filter(u => u.sub==="locked" || u.sub==="past_due").length;
+    }
+
+    document.getElementById("search").addEventListener("input", render);
+    document.getElementById("filter").addEventListener("change", render);
+
+    document.getElementById("btnExport").addEventListener("click", () => {
+      alert("Demo: Export will download CSV once API/database is connected.");
+    });
+
+    document.getElementById("btnAdminSignOut").addEventListener("click", () => {
+      alert("Demo: Admin login/sign-out becomes real when we wire auth.");
+    });
+
+    render();
+  </script>
+</body>
+</html>
