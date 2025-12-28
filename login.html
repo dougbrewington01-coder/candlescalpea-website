@@ -183,6 +183,11 @@
   </main>
 
   <script>
+    // ============================
+    // CONFIG (CHOICE B)
+    // ============================
+    const API_BASE = "https://candlescalpea-api-9k6i8.ondigitalocean.app";
+
     function showToast(msg, type){
       const el = document.getElementById("toast");
       el.className = "toast " + (type || "warn");
@@ -195,7 +200,8 @@
       el.textContent = "";
     }
 
-    async function apiJSON(url, opts){
+    async function apiJSON(path, opts){
+      const url = `${API_BASE}${path}`;
       const resp = await fetch(url, {
         credentials: "include",
         ...opts,
@@ -206,11 +212,9 @@
     }
 
     async function redirectIfLoggedIn(){
-      // If already logged in, send them to correct page
       const { resp, data } = await apiJSON("/api/me", { method:"GET" });
       if (!resp.ok || !data || !data.ok) return;
 
-      // Check admin
       const a = await apiJSON("/api/admin/me", { method:"GET" });
       if (a.resp.ok && a.data && a.data.ok) {
         window.location.href = "admin.html";
@@ -248,7 +252,6 @@
         return;
       }
 
-      // Admin?
       const a = await apiJSON("/api/admin/me", { method:"GET" });
       if (a.resp.ok && a.data && a.data.ok) {
         window.location.href = "admin.html";
@@ -258,7 +261,6 @@
       window.location.href = "dashboard.html";
     });
 
-    // auto-redirect if already logged in
     redirectIfLoggedIn();
   </script>
 </body>
