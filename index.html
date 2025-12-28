@@ -294,6 +294,24 @@
       display:flex;
       justify-content:center;
       padding: 10px 0 0;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pill-note{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      font-size:13px;
+      font-weight:800;
+      color: rgba(255,255,255,0.86);
+      text-align:center;
+      max-width: 95%;
     }
 
     @media (max-width: 920px){
@@ -332,9 +350,8 @@
 
         <!-- RIGHT: boxed button links (top-right ONLY) -->
         <nav class="nav-actions" aria-label="Account actions">
-          <a class="btn" href="/login.html">Login</a>
-          <a class="btn" href="/register.html">Register</a>
-          
+          <a class="btn" href="login.html">Login</a>
+          <a class="btn" href="register.html">Register</a>
         </nav>
       </div>
     </div>
@@ -436,6 +453,13 @@
 
       <!-- PAYPAL SUBSCRIBE BUTTON (inserted here) -->
       <div class="paypal-wrap">
+        <!-- This note + login button only shows when NOT logged in -->
+        <div id="paypal-auth-note" class="pill-note" style="display:none;">
+          Please <b>log in</b> to subscribe so we can link your PayPal subscription to your account.
+        </div>
+        <a id="paypal-login-btn" class="btn btn-primary" href="login.html" style="display:none;">Login to Subscribe</a>
+
+        <!-- PayPal renders here when logged in -->
         <div id="paypal-button-container-P-7V116953VW030642CNFHVMWA"></div>
       </div>
     </section>
@@ -486,23 +510,88 @@
 
   <!-- PayPal SDK + Button Script (moved to bottom for clean loading) -->
   <script src="https://www.paypal.com/sdk/js?client-id=Abewm7IiRjqD7ACayRHMH9aYTZsw0-UwhiK95M2qzcE5mGJYAHdgUufOJFrkV6ijNMV9HbpHR4L7JOag&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
+
   <script>
-    paypal.Buttons({
-      style: {
-        shape: 'pill',
-        color: 'gold',
-        layout: 'vertical',
-        label: 'subscribe'
-      },
-      createSubscription: function(data, actions) {
-        return actions.subscription.create({
-          plan_id: 'P-7V116953VW030642CNFHVMWA'
-        });
-      },
-      onApprove: function(data, actions) {
-        alert(data.subscriptionID);
+    // ----------------------------
+    // LIVE RULE:
+    // Only show PayPal button if user is logged in (so we can link subscriptionID).
+    // ----------------------------
+    async function checkLoggedIn() {
+      try {
+        const resp = await fetch("/api/me", { credentials: "include" });
+        if (!resp.ok) return { ok: false };
+        const data = await resp.json();
+        return data && data.ok ? { ok: true, me: data } : { ok: false };
+      } catch {
+        return { ok: false };
       }
-    }).render('#paypal-button-container-P-7V116953VW030642CNFHVMWA');
+    }
+
+    async function linkSubscription(subscriptionID) {
+      const resp = await fetch("/api/paypal/link-subscription", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subscriptionID })
+      });
+
+      // If not logged in, server will return 401
+      if (resp.status === 401) {
+        throw new Error("not_logged_in");
+      }
+
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || !data.ok) {
+        throw new Error(data.reason || "link_failed");
+      }
+      return true;
+    }
+
+    (async function initPayPal() {
+      const authNote = document.getElementById("paypal-auth-note");
+      const loginBtn = document.getElementById("paypal-login-btn");
+      const paypalContainer = document.getElementById("paypal-button-container-P-7V116953VW030642CNFHVMWA");
+
+      const status = await checkLoggedIn();
+
+      // Not logged in -> hide PayPal, show login note/button
+      if (!status.ok) {
+        authNote.style.display = "inline-flex";
+        loginBtn.style.display = "inline-flex";
+        paypalContainer.style.display = "none";
+        return;
+      }
+
+      // Logged in -> show PayPal
+      paypalContainer.style.display = "block";
+
+      paypal.Buttons({
+        style: {
+          shape: "pill",
+          color: "gold",
+          layout: "vertical",
+          label: "subscribe"
+        },
+        createSubscription: function(data, actions) {
+          return actions.subscription.create({
+            plan_id: "P-7V116953VW030642CNFHVMWA"
+          });
+        },
+        onApprove: async function(data, actions) {
+          try {
+            // 1) Link PayPal subscriptionID to the logged-in user in your DB
+            await linkSubscription(data.subscriptionID);
+
+            // 2) Send user to dashboard (their subscription status will update via webhook)
+            window.location.href = "dashboard.html";
+          } catch (err) {
+            // If link failed, stop here and show a clean message
+            alert("Subscription approved, but we could not link it to your account. Please log in and try again.");
+            window.location.href = "login.html";
+          }
+        }
+      }).render("#paypal-button-container-P-7V116953VW030642CNFHVMWA");
+    })();
   </script>
 
 </body>
