@@ -347,6 +347,12 @@
   </main>
 
   <script>
+    // ============================
+    // CONFIG (CHOICE B)
+    // Every fetch uses API_BASE.
+    // ============================
+    const API_BASE = "https://candlescalpea-api-9k6i8.ondigitalocean.app";
+
     let USERS = [];
 
     function pill(text, type){
@@ -374,7 +380,8 @@
       el.textContent = "";
     }
 
-    async function apiJSON(url, opts){
+    async function apiJSON(path, opts){
+      const url = `${API_BASE}${path}`;
       const resp = await fetch(url, {
         credentials: "include",
         ...opts,
@@ -464,9 +471,9 @@
     }
 
     async function requireAdminOrRedirect(){
-      // 1) quick health check for API
+      // 1) API health check (FIXED to use API_BASE)
       try{
-        const h = await fetch("/health", { credentials:"include" });
+        const h = await fetch(`${API_BASE}/health`, { credentials:"include" });
         document.getElementById("statApi").innerHTML = h.ok ? pill("Online","ok") : pill("Offline","bad");
       }catch{
         document.getElementById("statApi").innerHTML = pill("Offline","bad");
@@ -475,7 +482,6 @@
       // 2) must be admin
       const { resp, data } = await apiJSON("/api/admin/me", { method:"GET" });
       if (!resp.ok || !data || !data.ok) {
-        // not admin or not logged in
         document.getElementById("statAuth").innerHTML = pill("Denied","bad");
         window.location.href = "login.html";
         return false;
