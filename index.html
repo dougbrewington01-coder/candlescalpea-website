@@ -578,18 +578,26 @@
           });
         },
         onApprove: async function(data, actions) {
-          try {
-            // 1) Link PayPal subscriptionID to the logged-in user in your DB
-            await linkSubscription(data.subscriptionID);
+  try {
+    // Must be logged in so the server knows WHO to link the subscription to
+    const r = await fetch("/api/paypal/link-subscription", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ subscription_id: data.subscriptionID })
+    });
 
-            // 2) Send user to dashboard (their subscription status will update via webhook)
-            window.location.href = "dashboard.html";
-          } catch (err) {
-            // If link failed, stop here and show a clean message
-            alert("Subscription approved, but we could not link it to your account. Please log in and try again.");
-            window.location.href = "login.html";
-          }
-        }
+    if (!r.ok) {
+      alert("Subscribed, but could not link to your account. Please log in first, then subscribe again.");
+      return;
+    }
+
+    alert("Subscription approved! Your account will update after PayPal confirms payment.");
+    location.href = "dashboard.html";
+  } catch (e) {
+    alert("Subscribed, but link step failed. Please contact support.");
+  }
+}
       }).render("#paypal-button-container-P-7V116953VW030642CNFHVMWA");
     })();
   </script>
