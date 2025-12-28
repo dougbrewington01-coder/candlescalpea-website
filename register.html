@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>CandleScalpEA — Register</title>
-  <meta name="description" content="Register — CandleScalpEA 5.0 (MT5)" />
+  <title>CandleScalpEA 5.0 — Register</title>
+  <meta name="description" content="Create your CandleScalpEA 5.0 account." />
 
   <style>
     :root{
@@ -18,17 +18,17 @@
       --radius:18px;
       --radius2:14px;
       --max:980px;
-
       --accent:#7c3aed;
-      --good:#22c55e;
+      --accent2:#22c55e;
       --warn:#f59e0b;
       --bad:#ef4444;
+      --good:#22c55e;
     }
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,"Apple Color Emoji","Segoe UI Emoji";
       color:var(--text);
       background:
         radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,0.30), transparent 55%),
@@ -37,22 +37,21 @@
         var(--bg);
       line-height:1.35;
     }
-    a{ color:inherit; text-decoration:none; }
-    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
-
+    a{color:inherit}
+    .container{width:min(var(--max),calc(100% - 40px));margin:0 auto}
     .topbar{
       position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      background: rgba(11,15,25,0.65);
+      backdrop-filter:blur(14px);
+      background:rgba(11,15,25,0.65);
       border-bottom:1px solid var(--line);
     }
     .topbar-inner{
       display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:14px 0; flex-wrap:wrap;
+      gap:16px; padding:14px 0;
     }
-    .brand{ display:flex; align-items:center; gap:12px; min-width:260px; }
+    .brand{display:flex; align-items:center; gap:12px; text-decoration:none}
     .logo{
-      width:40px;height:40px; border-radius:12px;
+      width:40px; height:40px; border-radius:12px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%),
         linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
@@ -60,94 +59,82 @@
       border:1px solid rgba(255,255,255,0.18);
       flex:0 0 auto;
     }
-    .brand-text{ display:flex; flex-direction:column; gap:2px; }
-    .brand-title{ font-weight:900; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
-    .brand-sub{ font-size:12.5px; color:var(--muted); line-height:1.1; }
+    .brand-text{display:flex;flex-direction:column;gap:2px}
+    .brand-title{font-weight:800;letter-spacing:.2px;font-size:15.5px;line-height:1.1}
+    .brand-sub{font-size:12.5px;color:var(--muted);line-height:1.1}
 
-    .nav-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+    .nav-actions{display:flex;gap:10px;flex-wrap:wrap}
     .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      height:36px; padding:0 12px; border-radius:12px;
+      display:inline-flex;align-items:center;justify-content:center;
+      height:36px;padding:0 12px;border-radius:12px;
       border:1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
-      font-size:13px; font-weight:750;
-      color: rgba(255,255,255,0.92);
-      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+      background:rgba(255,255,255,0.06);
+      box-shadow:0 10px 30px rgba(0,0,0,0.20);
+      font-size:13px;font-weight:650;
+      color:rgba(255,255,255,0.92);
+      text-decoration:none;
+      transition:transform 140ms ease, background 140ms ease, border-color 140ms ease;
       white-space:nowrap;
       cursor:pointer;
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
-    .btn-primary{ border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.20); }
-    .btn-primary:hover{ background: rgba(124,58,237,0.28); border-color: rgba(124,58,237,0.70); }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,0.10);border-color:rgba(255,255,255,0.22)}
+    .btn-primary{border-color:rgba(124,58,237,0.55);background:rgba(124,58,237,0.20)}
+    .btn-primary:hover{background:rgba(124,58,237,0.28);border-color:rgba(124,58,237,0.70)}
+    .btn-good{border-color:rgba(34,197,94,0.55);background:rgba(34,197,94,0.18)}
+    .btn-good:hover{background:rgba(34,197,94,0.24);border-color:rgba(34,197,94,0.70)}
 
-    main{ padding: 34px 0 46px; }
-    h1{ margin:0 0 8px; font-size:26px; letter-spacing:-0.3px; }
-    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:80ch; }
-
+    main{padding:28px 0 48px}
     .card{
       border:1px solid var(--line);
-      background: rgba(255,255,255,0.05);
-      border-radius: var(--radius2);
-      padding:16px;
-      box-shadow: 0 18px 55px rgba(0,0,0,0.25);
+      background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+      overflow:hidden;
+      position:relative;
     }
+    h1{margin:0 0 8px;font-size:26px;letter-spacing:-.3px;line-height:1.1}
+    .subtitle{margin:0 0 18px;color:var(--muted);font-size:14px;max-width:70ch}
 
-    label{ display:block; font-size:13px; color: rgba(255,255,255,0.82); font-weight:800; margin:10px 0 6px; }
-    input{
-      width:100%;
-      padding:11px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(0,0,0,0.25);
-      color: rgba(255,255,255,0.92);
-      outline:none;
-      font-size:14px;
-    }
-    input::placeholder{ color: rgba(255,255,255,0.45); }
-
-    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px; }
-    .row .btn{ height:38px; }
-    .muted{ color:var(--muted); font-size:13.5px; }
-
-    .toast{
-      margin-top:12px;
-      padding:10px 12px;
+    .alert{
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.05);
       border-radius:14px;
-      border:1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: rgba(255,255,255,0.90);
+      padding:12px 12px;
+      margin:14px 0;
       font-size:13.5px;
+      color:rgba(255,255,255,0.9);
       display:none;
       white-space:pre-wrap;
     }
-    .toast.ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
-    .toast.bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
-    .toast.warn{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
-
-    .verifyBox{
-      margin-top:12px;
-      padding:12px;
+    .alert.bad{border-color:rgba(239,68,68,0.45); background:rgba(239,68,68,0.10)}
+    .alert.good{border-color:rgba(34,197,94,0.45); background:rgba(34,197,94,0.10)}
+    .row{display:grid;grid-template-columns:1fr;gap:12px; margin-top:10px}
+    label{font-size:13px;color:rgba(255,255,255,0.78);display:block;margin:0 0 6px}
+    input{
+      width:100%;
+      padding:12px 12px;
       border-radius:14px;
-      border:1px solid rgba(34,197,94,0.35);
-      background: rgba(34,197,94,0.10);
-      display:none;
+      border:1px solid rgba(255,255,255,0.12);
+      background:rgba(255,255,255,0.04);
+      color:rgba(255,255,255,0.92);
+      outline:none;
+      font-size:15px;
     }
-    .verifyLink{
-      display:block;
-      margin-top:8px;
-      word-break:break-all;
-      text-decoration:underline;
-      color: rgba(255,255,255,0.95);
-      font-weight:800;
-    }
-
+    input:focus{border-color:rgba(124,58,237,0.55)}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+    .muted{color:var(--muted);font-size:13.5px;margin-top:10px}
     footer{
-      padding:26px 0 20px;
+      padding:18px 0 36px;
       border-top:1px solid var(--line);
       color:var(--muted);
       font-size:12.5px;
-      margin-top:18px;
+      margin-top:22px;
+    }
+    code{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-size:12.5px;
+      color:rgba(255,255,255,0.88);
     }
   </style>
 </head>
@@ -164,7 +151,7 @@
           </div>
         </a>
 
-        <nav class="nav-actions" aria-label="Account actions">
+        <nav class="nav-actions" aria-label="Navigation">
           <a class="btn" href="index.html">Home</a>
           <a class="btn btn-primary" href="login.html">Login</a>
         </nav>
@@ -173,33 +160,51 @@
   </header>
 
   <main class="container">
-    <h1>Create Account</h1>
-    <p class="subtitle">Create your account and verify your email. After verification, log in to your dashboard.</p>
-
     <div class="card">
-      <div class="toast" id="toast"></div>
+      <h1>Create Account</h1>
+      <p class="subtitle">Create your account and verify your email. After verification, log in to your dashboard.</p>
 
-      <form id="regForm">
-        <label for="email">Email</label>
-        <input id="email" type="email" autocomplete="email" placeholder="you@email.com" required />
+      <div id="alertBad" class="alert bad"></div>
+      <div id="alertGood" class="alert good"></div>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="new-password" placeholder="Min 8 characters" required />
-
-        <label for="confirm">Confirm Password</label>
-        <input id="confirm" type="password" autocomplete="new-password" placeholder="Re-type password" required />
-
-        <div class="row">
-          <button class="btn btn-primary" type="submit" id="btnCreate">Create Account</button>
-          <span class="muted">Already have an account? <a href="login.html" style="text-decoration:underline;">Login</a></span>
+      <div class="row">
+        <div>
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" placeholder="you@email.com" />
         </div>
-      </form>
 
-      <div class="verifyBox" id="verifyBox">
-        <div style="font-weight:900;">✅ Account created. Now verify your email:</div>
-        <a class="verifyLink" id="verifyLink" href="#" target="_blank" rel="noopener">Open verification link</a>
-        <div class="muted" style="margin-top:8px;">
-          After you verify, come back and log in.
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="new-password" placeholder="Minimum 8 characters" />
+        </div>
+
+        <div>
+          <label for="confirm">Confirm Password</label>
+          <input id="confirm" type="password" autocomplete="new-password" placeholder="Type it again" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="btnRegister" class="btn btn-primary" type="button">Create Account</button>
+        <a class="btn" href="login.html">Already have an account? Login</a>
+      </div>
+
+      <div id="verifyBox" style="display:none; margin-top:16px;">
+        <div class="alert good" style="display:block;">
+          ✅ Account created. Now verify your email using the button below.
+          <div style="margin-top:8px; opacity:.9;">
+            If you’re testing, this uses the verification link returned by the API.
+          </div>
+        </div>
+
+        <div class="actions">
+          <a id="btnVerify" class="btn btn-good" href="#" target="_blank" rel="noopener">Verify Email</a>
+          <button id="btnCopy" class="btn" type="button">Copy Verification Link</button>
+        </div>
+
+        <div class="muted" style="margin-top:10px;">
+          Verification link: <br/>
+          <code id="verifyUrlText"></code>
         </div>
       </div>
     </div>
@@ -211,97 +216,113 @@
   </main>
 
   <script>
-    function showToast(msg, type){
-      const el = document.getElementById("toast");
-      el.className = "toast " + (type || "warn");
-      el.style.display = "block";
-      el.textContent = msg;
-    }
-    function hideToast(){
-      const el = document.getElementById("toast");
-      el.style.display = "none";
-      el.textContent = "";
-    }
+    // ============================
+    // CONFIG
+    // ============================
+    // If your API is on the SAME domain as your website, leave this as "".
+    // If your API is on a different domain (like DigitalOcean default URL), set it here:
+    // Example: const API_BASE = "https://candlescalpea-api-xxxxx.ondigitalocean.app";
+    const API_BASE = "";
 
-    async function apiJSON(url, opts){
-      const resp = await fetch(url, {
-        credentials: "include",
-        ...opts,
-        headers: { "Content-Type":"application/json", ...(opts && opts.headers ? opts.headers : {}) }
-      });
-      const data = await resp.json().catch(() => ({}));
-      return { resp, data };
+    const alertBad = document.getElementById("alertBad");
+    const alertGood = document.getElementById("alertGood");
+    const verifyBox = document.getElementById("verifyBox");
+    const btnVerify = document.getElementById("btnVerify");
+    const btnCopy = document.getElementById("btnCopy");
+    const verifyUrlText = document.getElementById("verifyUrlText");
+
+    function showBad(msg){
+      alertGood.style.display = "none";
+      alertBad.textContent = msg;
+      alertBad.style.display = "block";
     }
-
-    async function redirectIfLoggedIn(){
-      const { resp, data } = await apiJSON("/api/me", { method:"GET" });
-      if (!resp.ok || !data || !data.ok) return;
-
-      const a = await apiJSON("/api/admin/me", { method:"GET" });
-      if (a.resp.ok && a.data && a.data.ok) {
-        window.location.href = "admin.html";
-        return;
-      }
-      window.location.href = "dashboard.html";
+    function showGood(msg){
+      alertBad.style.display = "none";
+      alertGood.textContent = msg;
+      alertGood.style.display = "block";
     }
 
-    document.getElementById("regForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      hideToast();
+    function friendlyReason(reason){
+      if (!reason) return "Unknown error.";
+      const map = {
+        bad_email: "That email looks invalid.",
+        password_too_short: "Password must be at least 8 characters.",
+        passwords_do_not_match: "Passwords do not match.",
+        email_exists: "That email already has an account. Try logging in.",
+        register_failed: "Register failed (server error).",
+        server_error: "Server error.",
+      };
+      return map[reason] || reason;
+    }
+
+    async function doRegister(){
+      alertBad.style.display = "none";
+      alertGood.style.display = "none";
+      verifyBox.style.display = "none";
 
       const email = (document.getElementById("email").value || "").trim();
       const password = (document.getElementById("password").value || "").trim();
-      const confirm_password = (document.getElementById("confirm").value || "").trim();
+      const confirm = (document.getElementById("confirm").value || "").trim();
 
-      if (!email || !password || !confirm_password) {
-        showToast("Fill out all fields.", "warn");
-        return;
+      if (!email) return showBad("Enter your email.");
+      if (!password || password.length < 8) return showBad("Password must be at least 8 characters.");
+      if (confirm !== password) return showBad("Passwords do not match.");
+
+      const url = (API_BASE || "") + "/api/register";
+
+      try{
+        const resp = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type":"application/json" },
+          credentials: "include", // IMPORTANT for session cookies
+          body: JSON.stringify({
+            email,
+            password,
+            confirm_password: confirm
+          })
+        });
+
+        const data = await resp.json().catch(() => null);
+
+        if (!resp.ok){
+          const reason = data?.reason || ("http_" + resp.status);
+          return showBad("Register failed. Reason: " + friendlyReason(reason));
+        }
+
+        if (!data?.ok){
+          const reason = data?.reason || "unknown";
+          return showBad("Register failed. Reason: " + friendlyReason(reason));
+        }
+
+        showGood("Account created.");
+
+        // Show verify link returned by API
+        const verifyUrl = data.verify_url || "";
+        if (verifyUrl){
+          const full = verifyUrl.startsWith("http") ? verifyUrl : ((API_BASE || window.location.origin) + verifyUrl);
+          btnVerify.href = full;
+          verifyUrlText.textContent = full;
+          verifyBox.style.display = "block";
+        } else {
+          // If server didn't return a link, still succeed
+          showGood("Account created. (No verify link returned by server.)");
+        }
+
+      }catch(err){
+        showBad("Register failed. Reason: network_error");
       }
-      if (password.length < 8) {
-        showToast("Password must be at least 8 characters.", "warn");
-        return;
+    }
+
+    document.getElementById("btnRegister").addEventListener("click", doRegister);
+
+    btnCopy.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(verifyUrlText.textContent || "");
+        showGood("Verification link copied.");
+      }catch{
+        showBad("Could not copy link (your browser blocked it).");
       }
-      if (password !== confirm_password) {
-        showToast("Passwords do not match.", "warn");
-        return;
-      }
-
-      const btn = document.getElementById("btnCreate");
-      btn.disabled = true;
-
-      const { resp, data } = await apiJSON("/api/register", {
-        method:"POST",
-        body: JSON.stringify({ email, password, confirm_password })
-      });
-
-      btn.disabled = false;
-
-      if (!resp.ok || !data || !data.ok) {
-        const reason = data && data.reason ? data.reason : "Register failed.";
-        showToast("Register failed.\nReason: " + reason, "bad");
-        return;
-      }
-
-      // Show verification link returned by server
-      const verify_url = data.verify_url || "";
-      if (!verify_url) {
-        showToast("Registered, but verify link missing. (Server needs to return verify_url)", "warn");
-        return;
-      }
-
-      const full = verify_url.startsWith("http") ? verify_url : (location.origin + verify_url);
-
-      const box = document.getElementById("verifyBox");
-      const link = document.getElementById("verifyLink");
-      link.href = full;
-      link.textContent = full;
-      box.style.display = "block";
-
-      showToast("Account created. Click the verification link below.", "ok");
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
     });
-
-    redirectIfLoggedIn();
   </script>
 </body>
 </html>
