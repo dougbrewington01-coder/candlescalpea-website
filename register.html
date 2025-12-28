@@ -221,7 +221,7 @@
     // ============================
     // If your API is on the SAME domain as your website, leave this as "".
     // If your API is on a different domain (like DigitalOcean default URL), set it here:
-    // Example: const API_BASE = "https://candlescalpea-api-xxxxx.ondigitalocean.app";
+    // Example: const API_BASE = "https://candlescalpea-api-9k6i8.ondigitalocean.app";
     const API_BASE = "https://candlescalpea-api-9k6i8.ondigitalocean.app";
 
     const alertBad = document.getElementById("alertBad");
@@ -268,13 +268,14 @@
       if (!password || password.length < 8) return showBad("Password must be at least 8 characters.");
       if (confirm !== password) return showBad("Passwords do not match.");
 
-      const url = (API_BASE || "") + "/api/register";
+      // ✅ CHANGED (1 line) so it matches what you asked for
+      const url = `${API_BASE}/api/register`;
 
       try{
         const resp = await fetch(url, {
           method: "POST",
           headers: { "Content-Type":"application/json" },
-          credentials: "include", // IMPORTANT for session cookies
+          // ✅ REMOVED credentials: "include"
           body: JSON.stringify({
             email,
             password,
