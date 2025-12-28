@@ -337,11 +337,6 @@
 
         <div class="actions" style="margin-top:12px;">
           <a class="btn btn-primary" id="downloadBtn" href="#" style="pointer-events:none; opacity:.55;">Download EA (Locked)</a>
-          <button class="btn" type="button" id="btnAfterInstall" disabled style="opacity:.55;">I Installed It</button>
-        </div>
-
-        <div class="help" id="downloadHelp" style="margin-top:10px;">
-          Once the EA is installed and running, the website can hide the download to reduce sharing.
         </div>
       </div>
     </div>
@@ -388,7 +383,6 @@
     const installPill = document.getElementById("installPill");
 
     const downloadBtn = document.getElementById("downloadBtn");
-    const btnAfterInstall = document.getElementById("btnAfterInstall");
 
     function setPill(el, state) {
       el.classList.remove("ok","warn","bad");
@@ -438,15 +432,11 @@
         downloadBtn.style.pointerEvents = "auto";
         downloadBtn.style.opacity = "1";
         downloadBtn.href = "#"; // will be replaced with secure link from API
-        btnAfterInstall.disabled = false;
-        btnAfterInstall.style.opacity = "1";
       } else {
         downloadBtn.textContent = "Download EA (Locked)";
         downloadBtn.style.pointerEvents = "none";
         downloadBtn.style.opacity = ".55";
         downloadBtn.href = "#";
-        btnAfterInstall.disabled = true;
-        btnAfterInstall.style.opacity = ".55";
       }
     }
 
@@ -467,10 +457,6 @@
       document.getElementById("mt5Input").value = "";
       document.getElementById("nickInput").value = "";
       document.getElementById("saveMsg").textContent = "";
-    });
-
-    document.getElementById("btnAfterInstall").addEventListener("click", () => {
-      alert("Demo: We'll wire this to the API so the download can be hidden after install is detected.");
     });
 
     document.getElementById("btnSignOut").addEventListener("click", () => {
