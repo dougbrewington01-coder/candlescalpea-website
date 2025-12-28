@@ -19,7 +19,6 @@
       --radius2: 14px;
       --max: 1120px;
 
-
       --accent: #7c3aed;   /* purple */
       --accent2:#22c55e;   /* green */
       --warn: #f59e0b;     /* amber */
@@ -512,13 +511,18 @@
   <script src="https://www.paypal.com/sdk/js?client-id=Abewm7IiRjqD7ACayRHMH9aYTZsw0-UwhiK95M2qzcE5mGJYAHdgUufOJFrkV6ijNMV9HbpHR4L7JOag&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 
   <script>
+    // ============================
+    // CONFIG (CHOICE B)
+    // ============================
+    const API_BASE = "https://candlescalpea-api-9k6i8.ondigitalocean.app";
+
     // ----------------------------
     // LIVE RULE:
     // Only show PayPal button if user is logged in (so we can link subscriptionID).
     // ----------------------------
     async function checkLoggedIn() {
       try {
-        const resp = await fetch("/api/me", { credentials: "include" });
+        const resp = await fetch(`${API_BASE}/api/me`, { credentials: "include" });
         if (!resp.ok) return { ok: false };
         const data = await resp.json();
         return data && data.ok ? { ok: true, me: data } : { ok: false };
@@ -528,14 +532,14 @@
     }
 
     async function linkSubscription(subscriptionID) {
-      const resp = await fetch("/api/paypal/link-subscription", {
+      const resp = await fetch(`${API_BASE}/api/paypal/link-subscription`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subscriptionID })
+        // Send BOTH keys to match either backend expectation safely
+        body: JSON.stringify({ subscriptionID, subscription_id: subscriptionID })
       });
 
-      // If not logged in, server will return 401
       if (resp.status === 401) {
         throw new Error("not_logged_in");
       }
@@ -578,26 +582,14 @@
           });
         },
         onApprove: async function(data, actions) {
-  try {
-    // Must be logged in so the server knows WHO to link the subscription to
-    const r = await fetch("/api/paypal/link-subscription", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({ subscription_id: data.subscriptionID })
-    });
-
-    if (!r.ok) {
-      alert("Subscribed, but could not link to your account. Please log in first, then subscribe again.");
-      return;
-    }
-
-    alert("Subscription approved! Your account will update after PayPal confirms payment.");
-    location.href = "dashboard.html";
-  } catch (e) {
-    alert("Subscribed, but link step failed. Please contact support.");
-  }
-}
+          try {
+            await linkSubscription(data.subscriptionID);
+            window.location.href = "dashboard.html";
+          } catch (err) {
+            alert("Subscription approved, but we could not link it to your account. Please log in and try again.");
+            window.location.href = "login.html";
+          }
+        }
       }).render("#paypal-button-container-P-7V116953VW030642CNFHVMWA");
     })();
   </script>
