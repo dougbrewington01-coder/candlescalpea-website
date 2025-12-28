@@ -1,77 +1,265 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Login — CandleScalpEA</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CandleScalpEA — Login</title>
+  <meta name="description" content="Login — CandleScalpEA 5.0 (MT5)" />
+
   <style>
     :root{
       --bg:#0b0f19;
       --panel:rgba(255,255,255,0.06);
+      --panel2:rgba(255,255,255,0.08);
       --text:rgba(255,255,255,0.92);
       --muted:rgba(255,255,255,0.70);
       --line:rgba(255,255,255,0.10);
+      --shadow:0 20px 80px rgba(0,0,0,0.45);
+      --radius:18px;
+      --radius2:14px;
+      --max:980px;
+
       --accent:#7c3aed;
+      --good:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
     }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg)}
-    .container{max-width:520px;margin:auto;padding:22px}
-    .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
-    input{
-      width:100%;padding:11px;border-radius:12px;border:1px solid var(--line);
-      background:#000;color:white;margin-top:10px
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 15% 10%, rgba(124,58,237,0.30), transparent 55%),
+        radial-gradient(900px 500px at 85% 25%, rgba(34,197,94,0.18), transparent 55%),
+        radial-gradient(900px 500px at 50% 95%, rgba(59,130,246,0.12), transparent 60%),
+        var(--bg);
+      line-height:1.35;
     }
+    a{ color:inherit; text-decoration:none; }
+    .container{ width:min(var(--max), calc(100% - 40px)); margin:0 auto; }
+
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(11,15,25,0.65);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; padding:14px 0; flex-wrap:wrap;
+    }
+    .brand{ display:flex; align-items:center; gap:12px; min-width:260px; }
+    .logo{
+      width:40px;height:40px; border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 40%),
+        linear-gradient(135deg, rgba(124,58,237,1), rgba(34,197,94,1));
+      box-shadow:0 12px 30px rgba(0,0,0,0.35);
+      border:1px solid rgba(255,255,255,0.18);
+      flex:0 0 auto;
+    }
+    .brand-text{ display:flex; flex-direction:column; gap:2px; }
+    .brand-title{ font-weight:900; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
+    .brand-sub{ font-size:12.5px; color:var(--muted); line-height:1.1; }
+
+    .nav-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .btn{
-      width:100%;margin-top:12px;padding:11px 14px;border-radius:12px;border:1px solid var(--line);
-      background:rgba(124,58,237,.35);color:white;font-weight:900;cursor:pointer;
+      display:inline-flex; align-items:center; justify-content:center;
+      height:36px; padding:0 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+      font-size:13px; font-weight:750;
+      color: rgba(255,255,255,0.92);
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+      white-space:nowrap;
+      cursor:pointer;
     }
-    .link{display:inline-block;margin-top:12px;color:var(--muted);text-decoration:none}
-    .msg{margin-top:10px;color:var(--muted);font-size:13px;min-height:18px}
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .btn-primary{ border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.20); }
+    .btn-primary:hover{ background: rgba(124,58,237,0.28); border-color: rgba(124,58,237,0.70); }
+
+    main{ padding: 34px 0 46px; }
+    h1{ margin:0 0 8px; font-size:26px; letter-spacing:-0.3px; }
+    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:80ch; }
+
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius2);
+      padding:16px;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.25);
+    }
+
+    label{ display:block; font-size:13px; color: rgba(255,255,255,0.82); font-weight:800; margin:10px 0 6px; }
+    input{
+      width:100%;
+      padding:11px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(0,0,0,0.25);
+      color: rgba(255,255,255,0.92);
+      outline:none;
+      font-size:14px;
+    }
+    input::placeholder{ color: rgba(255,255,255,0.45); }
+
+    .row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px; }
+    .row .btn{ height:38px; }
+    .muted{ color:var(--muted); font-size:13.5px; }
+
+    .toast{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.90);
+      font-size:13.5px;
+      display:none;
+      white-space:pre-wrap;
+    }
+    .toast.ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .toast.bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
+    .toast.warn{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
+
+    footer{
+      padding:26px 0 20px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:12.5px;
+      margin-top:18px;
+    }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <div class="card">
-      <h2 style="margin:0 0 8px">Login</h2>
-      <div style="color:var(--muted);margin-bottom:6px">Enter your email and password.</div>
+  <header class="topbar">
+    <div class="container">
+      <div class="topbar-inner">
+        <a class="brand" href="index.html">
+          <div class="logo" aria-hidden="true"></div>
+          <div class="brand-text">
+            <div class="brand-title">CandleScalpEA 5.0</div>
+            <div class="brand-sub">Login</div>
+          </div>
+        </a>
 
-      <input id="email" placeholder="Email" autocomplete="email"/>
-      <input id="password" placeholder="Password" type="password" autocomplete="current-password"/>
-
-      <button class="btn" id="btn">Login</button>
-      <div class="msg" id="msg"></div>
-
-      <a class="link" href="register.html">No account? Register</a><br/>
-      <a class="link" href="index.html">Back to home</a>
+        <nav class="nav-actions" aria-label="Account actions">
+          <a class="btn" href="index.html">Home</a>
+          <a class="btn btn-primary" href="register.html">Register</a>
+        </nav>
+      </div>
     </div>
-  </div>
+  </header>
 
-<script>
-const API = "/api";
+  <main class="container">
+    <h1>Sign In</h1>
+    <p class="subtitle">Enter your email and password to access your dashboard. Admins will be redirected to the admin panel automatically.</p>
 
-document.getElementById("btn").onclick = async () => {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+    <div class="card">
+      <div class="toast" id="toast"></div>
 
-  const msg = document.getElementById("msg");
-  msg.textContent = "";
+      <form id="loginForm">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" placeholder="you@email.com" required />
 
-  const r = await fetch(API + "/auth/login", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    credentials:"include",
-    body: JSON.stringify({ email, password })
-  });
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
 
-  const d = await r.json().catch(()=>({ok:false,reason:"bad_json"}));
-  if(d.ok){
-    // Dashboard package is next — for now send them home.
-    location.href = "index.html";
-    return;
-  }
+        <div class="row">
+          <button class="btn btn-primary" type="submit" id="btnLogin">Login</button>
+          <span class="muted">Don’t have an account? <a href="register.html" style="text-decoration:underline;">Register</a></span>
+        </div>
+      </form>
+    </div>
 
-  msg.textContent = d.reason || "login_failed";
-};
-</script>
+    <footer>
+      <div><b>CandleScalpEA 5.0</b> — Created by Doug Brewington (AKA DOMINO)</div>
+      <div style="margin-top:6px;">Secure login is required for all dashboard/admin access.</div>
+    </footer>
+  </main>
+
+  <script>
+    function showToast(msg, type){
+      const el = document.getElementById("toast");
+      el.className = "toast " + (type || "warn");
+      el.style.display = "block";
+      el.textContent = msg;
+    }
+    function hideToast(){
+      const el = document.getElementById("toast");
+      el.style.display = "none";
+      el.textContent = "";
+    }
+
+    async function apiJSON(url, opts){
+      const resp = await fetch(url, {
+        credentials: "include",
+        ...opts,
+        headers: { "Content-Type":"application/json", ...(opts && opts.headers ? opts.headers : {}) }
+      });
+      const data = await resp.json().catch(() => ({}));
+      return { resp, data };
+    }
+
+    async function redirectIfLoggedIn(){
+      // If already logged in, send them to correct page
+      const { resp, data } = await apiJSON("/api/me", { method:"GET" });
+      if (!resp.ok || !data || !data.ok) return;
+
+      // Check admin
+      const a = await apiJSON("/api/admin/me", { method:"GET" });
+      if (a.resp.ok && a.data && a.data.ok) {
+        window.location.href = "admin.html";
+        return;
+      }
+
+      window.location.href = "dashboard.html";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      hideToast();
+
+      const email = (document.getElementById("email").value || "").trim();
+      const password = (document.getElementById("password").value || "").trim();
+
+      if (!email || !password) {
+        showToast("Missing email or password.", "warn");
+        return;
+      }
+
+      const btn = document.getElementById("btnLogin");
+      btn.disabled = true;
+
+      const { resp, data } = await apiJSON("/api/login", {
+        method:"POST",
+        body: JSON.stringify({ email, password })
+      });
+
+      btn.disabled = false;
+
+      if (!resp.ok || !data || !data.ok) {
+        const reason = data && data.reason ? data.reason : "Login failed.";
+        showToast("Login failed.\nReason: " + reason, "bad");
+        return;
+      }
+
+      // Admin?
+      const a = await apiJSON("/api/admin/me", { method:"GET" });
+      if (a.resp.ok && a.data && a.data.ok) {
+        window.location.href = "admin.html";
+        return;
+      }
+
+      window.location.href = "dashboard.html";
+    });
+
+    // auto-redirect if already logged in
+    redirectIfLoggedIn();
+  </script>
 </body>
 </html>
