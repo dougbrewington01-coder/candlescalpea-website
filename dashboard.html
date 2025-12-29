@@ -17,13 +17,14 @@
       --shadow:0 20px 80px rgba(0,0,0,0.45);
       --radius:18px;
       --radius2:14px;
-      --max:1120px;
+      --max:1180px;
 
       --accent:#7c3aed;   /* purple */
-      --accent2:#22c55e;  /* green */
+      --good:#22c55e;     /* green */
       --warn:#f59e0b;     /* amber */
       --bad:#ef4444;      /* red */
     }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
@@ -74,42 +75,31 @@
       flex:0 0 auto;
     }
     .brand-text{ display:flex; flex-direction:column; gap:2px; }
-    .brand-title{ font-weight:800; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
+    .brand-title{ font-weight:900; letter-spacing:0.2px; font-size:15.5px; line-height:1.1; }
     .brand-sub{ font-size:12.5px; color:var(--muted); line-height:1.1; }
 
-    .nav-actions{
-      display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;
-    }
+    .nav-actions{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       height:36px; padding:0 12px; border-radius:12px;
       border:1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.06);
       box-shadow: 0 10px 30px rgba(0,0,0,0.20);
-      font-size:13px; font-weight:650;
+      font-size:13px; font-weight:750;
       color: rgba(255,255,255,0.92);
       transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
       white-space:nowrap;
       cursor:pointer;
     }
-    .btn:hover{
-      transform: translateY(-1px);
-      background: rgba(255,255,255,0.10);
-      border-color: rgba(255,255,255,0.22);
-    }
-    .btn-primary{
-      border-color: rgba(124,58,237,0.55);
-      background: rgba(124,58,237,0.20);
-    }
-    .btn-primary:hover{
-      background: rgba(124,58,237,0.28);
-      border-color: rgba(124,58,237,0.70);
-    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.22); }
+    .btn-primary{ border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.20); }
+    .btn-primary:hover{ background: rgba(124,58,237,0.28); border-color: rgba(124,58,237,0.70); }
+    .btn-danger{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
+    .btn-danger:hover{ background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.55); }
 
-    /* Page */
     main{ padding: 28px 0 44px; }
-    h1{ margin:0 0 10px; font-size:26px; letter-spacing:-0.3px; }
-    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:75ch; }
+    h1{ margin:0 0 8px; font-size:26px; letter-spacing:-0.3px; }
+    .subtitle{ margin:0 0 18px; color:var(--muted); font-size:14.5px; max-width:80ch; }
 
     .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; }
     .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; }
@@ -119,12 +109,17 @@
       background: rgba(255,255,255,0.05);
       border-radius: var(--radius2);
       padding:16px;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.25);
     }
     .card h2{ margin:0 0 10px; font-size:16px; letter-spacing:-0.2px; }
-    .row{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.07); }
-    .row:last-child{ border-bottom:none; }
+
+    .stat{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+    .stat:last-child{ border-bottom:none; }
     .label{ color:var(--muted); font-size:13px; }
-    .value{ font-weight:800; font-size:13.5px; }
+    .value{ font-weight:900; font-size:14px; }
 
     .pill{
       display:inline-flex;
@@ -135,22 +130,19 @@
       border:1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.06);
       font-size:13px;
-      font-weight:800;
+      font-weight:900;
       white-space:nowrap;
     }
     .dot{ width:10px; height:10px; border-radius:50%; background: var(--muted); }
-    .ok{ color: rgba(255,255,255,0.92); border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
-    .ok .dot{ background: var(--accent2); }
+    .ok{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .ok .dot{ background: var(--good); }
     .warn{ border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.10); }
     .warn .dot{ background: var(--warn); }
     .bad{ border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.10); }
     .bad .dot{ background: var(--bad); }
 
-    .help{
-      color: var(--muted);
-      font-size: 13.5px;
-      margin-top:10px;
-    }
+    .help{ color:var(--muted); font-size:13.5px; margin-top:10px; }
+    .hr{ height:1px; background: rgba(255,255,255,0.08); margin:12px 0; }
 
     input{
       width:100%;
@@ -164,40 +156,18 @@
     }
     input::placeholder{ color: rgba(255,255,255,0.45); }
 
-    .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
+    .form-row{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+    .form-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
 
-    /* Video */
-    .video-wrap{
-      border:1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.04);
-      border-radius:16px;
-      overflow:hidden;
-    }
-    .video-top{
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      padding:12px 14px;
-      border-bottom:1px solid rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.85);
-      font-size:13px;
-      font-weight:800;
-    }
-    .video-box{
-      aspect-ratio:16/9;
-      width:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color: rgba(255,255,255,0.70);
+    .toast{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.90);
       font-size:13.5px;
-      padding: 14px;
-      text-align:center;
+      display:none;
     }
 
     footer{
@@ -208,11 +178,11 @@
       margin-top:18px;
     }
 
-    @media (max-width: 920px){
+    @media (max-width: 980px){
       .grid3{ grid-template-columns: 1fr; }
       .grid2{ grid-template-columns: 1fr; }
+      .form-row{ grid-template-columns: 1fr; }
       .brand{ min-width:auto; }
-      .nav-actions{ justify-content:flex-start; }
     }
   </style>
 </head>
@@ -229,239 +199,270 @@
           </div>
         </a>
 
-        <nav class="nav-actions" aria-label="Dashboard actions">
+        <nav class="nav-actions" aria-label="Account actions">
           <a class="btn" href="index.html">Home</a>
-          <a class="btn" href="#download">Download</a>
-          <button class="btn btn-primary" id="btnSignOut" type="button">Sign Out</button>
+          <a class="btn" href="admin.html" id="btnAdminLink" style="display:none;">Admin</a>
+          <button class="btn btn-danger" type="button" id="btnSignOut">Sign Out</button>
         </nav>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <h1>Your Dashboard</h1>
+    <h1>Dashboard</h1>
     <p class="subtitle">
-      This is what customers will use after they subscribe: they’ll see their status, add their MT5 account number + nickname,
-      watch the install video, and download the EA when access is active.
+      Manage your subscription access and save your <b>MT5 account number</b> + <b>nickname</b> (case-sensitive).
     </p>
 
     <!-- STATUS -->
     <div class="grid3">
       <div class="card">
         <h2>Account</h2>
-        <div class="row">
-          <div class="label">Email</div>
-          <div class="value" id="emailVal">you@example.com</div>
-        </div>
-        <div class="row">
+        <div class="stat"><div class="label">Email</div><div class="value" id="meEmail">—</div></div>
+        <div class="stat">
           <div class="label">Email Verified</div>
-          <div class="value">
-            <span class="pill warn" id="emailVerifiedPill"><span class="dot"></span>Not verified</span>
-          </div>
-        </div>
-        <div class="help" id="verifyHelp">
-          Verify your email to unlock subscription + downloads.
+          <div class="value" id="meVerified"><span class="pill warn"><span class="dot"></span>Checking</span></div>
         </div>
       </div>
 
       <div class="card">
         <h2>Subscription</h2>
-        <div class="row">
+        <div class="stat">
           <div class="label">Status</div>
-          <div class="value">
-            <span class="pill warn" id="subPill"><span class="dot"></span>Inactive</span>
-          </div>
+          <div class="value" id="meSubStatus"><span class="pill warn"><span class="dot"></span>Checking</span></div>
         </div>
-        <div class="row">
-          <div class="label">Plan</div>
-          <div class="value">$50 / month</div>
-        </div>
-        <div class="help" id="subHelp">
-          If payment fails or subscription is inactive, the EA is soft-locked (no new trades).
+        <div class="stat">
+          <div class="label">License</div>
+          <div class="value" id="meLicense"><span class="pill warn"><span class="dot"></span>Checking</span></div>
         </div>
       </div>
 
       <div class="card">
-        <h2>EA</h2>
-        <div class="row">
-          <div class="label">Product</div>
-          <div class="value">CandleScalpEA 5.0 (MT5)</div>
-        </div>
-        <div class="row">
-          <div class="label">Version</div>
-          <div class="value">v1.31</div>
-        </div>
-        <div class="row">
-          <div class="label">Install Check</div>
-          <div class="value">
-            <span class="pill warn" id="installPill"><span class="dot"></span>Not detected</span>
-          </div>
-        </div>
+        <h2>MT5 + Nickname</h2>
+        <div class="stat"><div class="label">MT5 Account</div><div class="value" id="meMt5">—</div></div>
+        <div class="stat"><div class="label">Nickname</div><div class="value" id="meNick">—</div></div>
       </div>
     </div>
 
-    <!-- MT5 + NICKNAME -->
-    <div class="grid2" style="margin-top:14px;">
-      <div class="card">
-        <h2>MT5 Account + Nickname</h2>
-
-        <div class="help" style="margin-top:0;">
-          One active MT5 account at a time per subscription.
-          Nickname is case-sensitive and must match what you type in MT5 EA Inputs.
-        </div>
-
-        <div style="margin-top:12px;">
-          <div class="label" style="margin-bottom:6px;">MT5 Account Number</div>
-          <input id="mt5Input" placeholder="Example: 123456789" />
-        </div>
-
-        <div style="margin-top:10px;">
-          <div class="label" style="margin-bottom:6px;">Nickname (case-sensitive)</div>
-          <input id="nickInput" placeholder="Example: Domino" />
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" type="button" id="btnSave">Save</button>
-          <button class="btn" type="button" id="btnClear">Clear</button>
-        </div>
-
-        <div class="help" id="saveMsg" style="margin-top:10px;"></div>
+    <!-- MT5 / NICK FORM -->
+    <div class="card" style="margin-top:14px;">
+      <h2>Save MT5 Account + Nickname</h2>
+      <div class="help" style="margin-top:0;">
+        Your nickname is <b>case-sensitive</b>. Type it exactly the same inside the EA inputs in MT5.
       </div>
 
-      <div class="card" id="download">
-        <h2>Download</h2>
-        <div class="help" style="margin-top:0;">
-          Download is available only when:
-          <b>email verified</b> + <b>subscription active</b>.
+      <div class="hr"></div>
+
+      <div class="form-row">
+        <div>
+          <div class="help" style="margin:0 0 6px;">MT5 Account Number</div>
+          <input id="inputMt5" placeholder="Example: 12345678" inputmode="numeric" />
         </div>
 
-        <div class="actions" style="margin-top:12px;">
-          <a class="btn btn-primary" id="downloadBtn" href="#" style="pointer-events:none; opacity:.55;">Download EA (Locked)</a>
+        <div>
+          <div class="help" style="margin:0 0 6px;">Nickname (case-sensitive)</div>
+          <input id="inputNick" placeholder="Example: Domino" />
         </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-primary" type="button" id="btnSave">Save</button>
+      </div>
+
+      <div class="toast" id="toast"></div>
+
+      <div class="help">
+        Note: If your MT5 account changes (prop firm upgrade), you may need admin to clear the old MT5 before saving a new one.
       </div>
     </div>
 
-    <!-- VIDEO -->
-    <section style="margin-top:14px;">
-      <h2 style="margin:0 0 12px; font-size:18px; letter-spacing:-0.2px;">Install Video</h2>
-      <div class="video-wrap">
-        <div class="video-top">
-          <div>How to Download & Install CandleScalpEA 5.0 in MT5</div>
-          <div style="opacity:.8; font-weight:700;">(YouTube placeholder)</div>
-        </div>
-        <div class="video-box">
-          Replace this box later with your YouTube embed on this dashboard page.
-        </div>
+    <!-- DOWNLOAD -->
+    <div class="card" style="margin-top:14px;">
+      <h2>Download</h2>
+      <div class="help" style="margin-top:0;">
+        Download is available only when your email is verified and your subscription is active.
       </div>
-    </section>
+
+      <div class="form-actions" style="margin-top:12px;">
+        <button class="btn btn-primary" type="button" id="btnDownload">Download EA</button>
+      </div>
+
+      <div class="toast" id="toastDownload"></div>
+    </div>
 
     <footer>
-      <div><b>CandleScalpEA 5.0</b> — Created by Doug Brewington (AKA DOMINO)</div>
+      <div><b>CandleScalpEA 5.0</b> — Customer Dashboard</div>
       <div style="margin-top:6px;">
-        Risk Disclosure: Trading involves risk and may not be suitable for all investors. Past performance does not guarantee future results.
-        Use at your own discretion.
+        Internal user portal. Do not share your login details.
       </div>
     </footer>
   </main>
 
   <script>
-    // NOTE: This dashboard is a "front-end shell" right now.
-    // Next, we will connect it to your API so it becomes real: sign-in, real status, real download lock, etc.
-
-    // Demo toggles (so you can SEE what customers will see)
-    // Change these to preview different states:
-    const DEMO = {
-      email: "customer@example.com",
-      emailVerified: false,
-      subscriptionActive: false,
-      installDetected: false
-    };
-
-    const emailVal = document.getElementById("emailVal");
-    const emailVerifiedPill = document.getElementById("emailVerifiedPill");
-    const subPill = document.getElementById("subPill");
-    const installPill = document.getElementById("installPill");
-
-    const downloadBtn = document.getElementById("downloadBtn");
-
-    function setPill(el, state) {
-      el.classList.remove("ok","warn","bad");
-      if (state === "ok") el.classList.add("ok");
-      else if (state === "bad") el.classList.add("bad");
-      else el.classList.add("warn");
+    // ----------------------------
+    // Helpers
+    // ----------------------------
+    function pill(text, type){
+      const cls = type === "ok" ? "ok" : type === "bad" ? "bad" : "warn";
+      return `<span class="pill ${cls}"><span class="dot"></span>${text}</span>`;
     }
 
-    function refreshUI() {
-      emailVal.textContent = DEMO.email;
-
-      // Email verified
-      if (DEMO.emailVerified) {
-        emailVerifiedPill.innerHTML = '<span class="dot"></span>Verified';
-        setPill(emailVerifiedPill, "ok");
-        document.getElementById("verifyHelp").textContent = "Email verified. You're good.";
-      } else {
-        emailVerifiedPill.innerHTML = '<span class="dot"></span>Not verified';
-        setPill(emailVerifiedPill, "warn");
-        document.getElementById("verifyHelp").textContent = "Verify your email to unlock subscription + downloads.";
-      }
-
-      // Subscription
-      if (DEMO.subscriptionActive) {
-        subPill.innerHTML = '<span class="dot"></span>Active';
-        setPill(subPill, "ok");
-        document.getElementById("subHelp").textContent = "Subscription active. EA will trade (subject to license validation).";
-      } else {
-        subPill.innerHTML = '<span class="dot"></span>Inactive';
-        setPill(subPill, "warn");
-        document.getElementById("subHelp").textContent = "Inactive subscription = EA soft-lock (no new trades).";
-      }
-
-      // Install check
-      if (DEMO.installDetected) {
-        installPill.innerHTML = '<span class="dot"></span>Installed & running';
-        setPill(installPill, "ok");
-      } else {
-        installPill.innerHTML = '<span class="dot"></span>Not detected';
-        setPill(installPill, "warn");
-      }
-
-      // Download lock rules
-      const canDownload = DEMO.emailVerified && DEMO.subscriptionActive;
-      if (canDownload) {
-        downloadBtn.textContent = "Download EA";
-        downloadBtn.style.pointerEvents = "auto";
-        downloadBtn.style.opacity = "1";
-        downloadBtn.href = "#"; // will be replaced with secure link from API
-      } else {
-        downloadBtn.textContent = "Download EA (Locked)";
-        downloadBtn.style.pointerEvents = "none";
-        downloadBtn.style.opacity = ".55";
-        downloadBtn.href = "#";
-      }
+    function showToast(el, msg, type){
+      el.style.display = "block";
+      el.style.borderColor =
+        type === "ok" ? "rgba(34,197,94,0.35)" :
+        type === "bad" ? "rgba(239,68,68,0.35)" :
+        "rgba(245,158,11,0.35)";
+      el.style.background =
+        type === "ok" ? "rgba(34,197,94,0.10)" :
+        type === "bad" ? "rgba(239,68,68,0.10)" :
+        "rgba(245,158,11,0.10)";
+      el.textContent = msg;
     }
 
-    refreshUI();
+    function isDigits(v){ return /^[0-9]+$/.test(String(v || "")); }
 
-    // Demo save buttons (real save comes when we connect API)
-    document.getElementById("btnSave").addEventListener("click", () => {
-      const mt5 = document.getElementById("mt5Input").value.trim();
-      const nick = document.getElementById("nickInput").value.trim();
-      if (!mt5 || !nick) {
-        document.getElementById("saveMsg").textContent = "Enter MT5 account number and nickname first.";
+    async function apiJSON(url, opts){
+      const resp = await fetch(url, {
+        credentials: "include",
+        ...opts,
+        headers: { "Content-Type":"application/json", ...(opts && opts.headers ? opts.headers : {}) }
+      });
+      const data = await resp.json().catch(() => ({}));
+      return { resp, data };
+    }
+
+    // ----------------------------
+    // FORCE LOGIN: if /api/me says not logged in, redirect to login.html
+    // ----------------------------
+    async function loadMe(){
+      const { resp, data } = await apiJSON("/api/me", { method: "GET" });
+      if (resp.status === 401 || !data || !data.ok) {
+        window.location.href = "login.html";
+        return null;
+      }
+      return data;
+    }
+
+    function renderMe(me){
+      document.getElementById("meEmail").textContent = me.email || "—";
+      document.getElementById("meMt5").textContent = me.mt5_account || "—";
+      document.getElementById("meNick").textContent = me.nickname || "—";
+
+      // Email verified pill
+      document.getElementById("meVerified").innerHTML =
+        me.email_verified ? pill("Verified", "ok") : pill("Not Verified", "warn");
+
+      // Subscription status pill
+      const s = String(me.subscription_status || "").toLowerCase();
+      let subType = "warn";
+      let subText = me.subscription_status || "unknown";
+      if (s === "active") subType = "ok";
+      if (s === "locked") subType = "bad";
+      if (s === "past_due") subType = "warn";
+      if (s === "canceled") subType = "warn";
+      document.getElementById("meSubStatus").innerHTML = pill(subText, subType);
+
+      // License pill
+      document.getElementById("meLicense").innerHTML =
+        me.license_active ? pill("Active", "ok") : pill("Inactive", "bad");
+
+      // Fill inputs (so user can see/edit)
+      document.getElementById("inputMt5").value = me.mt5_account || "";
+      document.getElementById("inputNick").value = me.nickname || "";
+
+      // Admin link: show only if admin endpoint returns ok
+      (async () => {
+        try{
+          const r = await fetch("/api/admin/me", { credentials:"include" });
+          if (r.ok){
+            const d = await r.json().catch(()=>({}));
+            if (d && d.ok){
+              document.getElementById("btnAdminLink").style.display = "inline-flex";
+            }
+          }
+        }catch{}
+      })();
+    }
+
+    // ----------------------------
+    // Actions
+    // ----------------------------
+    document.getElementById("btnSignOut").addEventListener("click", async () => {
+      try{
+        await apiJSON("/api/logout", { method:"POST", body: "{}" });
+      }catch{}
+      window.location.href = "index.html";
+    });
+
+    document.getElementById("btnSave").addEventListener("click", async () => {
+      const toast = document.getElementById("toast");
+      const mt5 = document.getElementById("inputMt5").value.trim();
+      const nick = document.getElementById("inputNick").value.trim();
+
+      if (!mt5 || !isDigits(mt5)) {
+        showToast(toast, "Please enter a valid MT5 account number (digits only).", "bad");
         return;
       }
-      document.getElementById("saveMsg").textContent = "Saved (demo). Next step: connect this to the API so it saves for real.";
+      if (!nick) {
+        showToast(toast, "Please enter your nickname (case-sensitive).", "bad");
+        return;
+      }
+
+      const { resp, data } = await apiJSON("/api/mt5/bind", {
+        method: "POST",
+        body: JSON.stringify({ mt5, nickname: nick })
+      });
+
+      if (resp.status === 401) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      if (!resp.ok || !data.ok) {
+        showToast(toast, "Could not save. " + (data.reason ? ("Reason: " + data.reason) : ""), "bad");
+        return;
+      }
+
+      showToast(toast, "Saved successfully.", "ok");
+
+      // Refresh display
+      const me = await loadMe();
+      if (me) renderMe(me);
     });
 
-    document.getElementById("btnClear").addEventListener("click", () => {
-      document.getElementById("mt5Input").value = "";
-      document.getElementById("nickInput").value = "";
-      document.getElementById("saveMsg").textContent = "";
+    document.getElementById("btnDownload").addEventListener("click", async () => {
+      const toast = document.getElementById("toastDownload");
+      try{
+        const resp = await fetch("/api/download", { credentials:"include" });
+
+        if (resp.status === 401) {
+          window.location.href = "login.html";
+          return;
+        }
+
+        if (!resp.ok) {
+          const data = await resp.json().catch(() => ({}));
+          showToast(toast, "Download not available. " + (data.reason ? ("Reason: " + data.reason) : ""), "bad");
+          return;
+        }
+
+        // For now server returns text (you said you'll wire a real file later)
+        const text = await resp.text();
+        showToast(toast, text || "Download endpoint is live.", "ok");
+      }catch{
+        showToast(toast, "Download failed due to a network error.", "bad");
+      }
     });
 
-    document.getElementById("btnSignOut").addEventListener("click", () => {
-      alert("Demo: Sign-out will be real once login is connected.");
-    });
+    // ----------------------------
+    // Init
+    // ----------------------------
+    (async function init(){
+      const me = await loadMe();
+      if (!me) return;
+      renderMe(me);
+    })();
   </script>
 </body>
 </html>
