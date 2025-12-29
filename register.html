@@ -265,7 +265,7 @@
       if (!password || password.length < 8) return showBad("Password must be at least 8 characters.");
       if (confirm !== password) return showBad("Passwords do not match.");
 
-      const url = `${API_BASE}/api/register`;
+      const url = `${API_BASE}/api/auth/register`;
 
       try{
         const resp = await fetch(url, {
